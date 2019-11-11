@@ -37,7 +37,7 @@ public class Runner {
         //init Player Objs
         for (int i = 0; i < Rounds; ++i) {
             p1.init(0, 8, rnd);
-            p2.init(0, 8, rnd);
+            p2.init(1, 8, rnd);
 
         }
 
@@ -45,6 +45,16 @@ public class Runner {
         ((Human) p1).getBoard().printBoard();
 
         //play game method
+        void playGame( Player oPlayer1, Player oPlayer2){
+            Move oLastMove = null;
+        while (bGameRunning){
+            oLastMove = oPlayer1.nextMove( oLastMove, timeP1, time);
+            if (!checkboard())
+                break;
+            oLastMove = oPlayer2.nextMove( oLastMove, timeP2, time);
+            bGameRunning = checkboard();
+            }
+        }
 
 
         //check valid moves
