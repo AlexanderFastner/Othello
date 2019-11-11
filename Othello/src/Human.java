@@ -18,6 +18,7 @@ public class Human implements Player {
 
     @Override
     public Move nextMove(Move prevMove, long tOpponent, long t) {
+
         return null;
     }
 

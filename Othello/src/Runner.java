@@ -41,6 +41,7 @@ public class Runner {
 
         }
 
+        //each player has their own board
         ((Human) p1).getBoard().printBoard();
 
         //play game method

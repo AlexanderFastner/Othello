@@ -2,7 +2,10 @@ import java.util.Random;
 
 public class AI implements Player {
 
+    ConsoleGameboard cgb;
+
     public AI(){
+        cgb = new ConsoleGameboard();
 
     }
 
