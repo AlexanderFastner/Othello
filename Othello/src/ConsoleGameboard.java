@@ -7,13 +7,20 @@ public class ConsoleGameboard {
     boolean [] gameBoardP;
     //gameBoardT is for what spaces are already taken
     boolean [] gameBoardT;
+    String [] gameBoardC;
+
+    String black = "\u25CF";
+    String white = "\u25CB";
+    String empty = "\u2610";
 
     //Constructor
     public ConsoleGameboard() {
         gameBoardP = new boolean[64];
         gameBoardT = new boolean[64];
+        gameBoardC = new String[64];
         initCBP();
         initCBT();
+        fillGameBoardC();
     }
 
     //initialize player board
@@ -34,6 +41,17 @@ public class ConsoleGameboard {
         gameBoardT[28] = true;
         gameBoardT[35] = true;
         gameBoardT[36] = true;
+    }
+
+    //initial setup of cmd line visual board
+    public void fillGameBoardC(){
+        for(int i = 0; i < 64; i++){
+            gameBoardC[i] = empty;
+        }
+        gameBoardC[27] = black;
+        gameBoardC[28] = white;
+        gameBoardC[35] = white;
+        gameBoardC[36] = black;
     }
 
     //print Board
@@ -74,5 +92,14 @@ public class ConsoleGameboard {
             }
 
         }
+        System.out.println();
+        System.out.println("gameBoardC");
+        for (int i = 0; i < 64; i++) {
+            if(i % 8 == 0) {
+                System.out.println();
+            }
+            System.out.print(gameBoardC[i] + " ");
+        }
+        System.out.println();
     }
 }

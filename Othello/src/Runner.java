@@ -32,6 +32,7 @@ public class Runner {
 //            Player p2 = new AI();
 //        }
 
+
         int Rounds = 6;
         //random
         Random rnd = new Random();
@@ -39,31 +40,47 @@ public class Runner {
         for (int i = 0; i < Rounds; ++i) {
             p1.init(0, 8, rnd);
             p2.init(1, 8, rnd);
-
+            playGame(p1, p2);
+            playGame(p2, p1);
         }
 
         //each player has their own board
         ((Human) p1).getBoard().printBoard();
 
-        //play game method
-        public void playGame(Player p1, Player p2) {
-
-            Move lastMove = null;
-
-            //while the games going
-            while(gameRunning) {
-                lastMove =
-
-            }
-        }
-
-
         //check valid moves
+
+
 
         //if valid, make move and pass arguements on in nextMove
     }
 
 
+    //Is the game still running
+       public static boolean checkStatus() {
+
+        //TODO add win condition
+
+            return true;
+        }
+
+    //play game method
+    public static void playGame(Player p1, Player p2) {
+        Move lastMove = null;
+        boolean gameRunning = true;
+        //while the games going
+        while(gameRunning) {
+            lastMove = p1.nextMove(lastMove, 0, 0);
+            ((Human) p1).getBoard().printBoard();
+            if (!checkStatus()){
+                break;
+            }
+            lastMove = p2.nextMove(lastMove, 0, 0);
+            ((Human) p2).getBoard().printBoard();
+
+            gameRunning = checkStatus();
+        }
+        System.out.println("Game ended");
+    }
 
 
 }
