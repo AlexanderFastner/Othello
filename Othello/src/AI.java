@@ -1,4 +1,5 @@
 import java.util.Random;
+import szte.mi.*;
 
 public class AI implements Player {
 

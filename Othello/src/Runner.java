@@ -1,5 +1,6 @@
 import java.util.Scanner;
 import java.util.Random;
+import szte.mi.*;
 
 public class Runner {
 
@@ -45,14 +46,14 @@ public class Runner {
         ((Human) p1).getBoard().printBoard();
 
         //play game method
-        void playGame( Player oPlayer1, Player oPlayer2){
-            Move oLastMove = null;
-        while (bGameRunning){
-            oLastMove = oPlayer1.nextMove( oLastMove, timeP1, time);
-            if (!checkboard())
-                break;
-            oLastMove = oPlayer2.nextMove( oLastMove, timeP2, time);
-            bGameRunning = checkboard();
+        public void playGame(Player p1, Player p2) {
+
+            Move lastMove = null;
+
+            //while the games going
+            while(gameRunning) {
+                lastMove =
+
             }
         }
 
