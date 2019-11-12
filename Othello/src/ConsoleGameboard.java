@@ -1,14 +1,16 @@
 import java.util.Arrays;
+import java.util.Scanner;
 
 public class ConsoleGameboard {
 
-    //boolean array
     //gameBoardP is for Player moves
     boolean [] gameBoardP;
     //gameBoardT is for what spaces are already taken
     boolean [] gameBoardT;
+    //BoardC is to look pretty
     String [] gameBoardC;
 
+    //unicode for boardC
     String black = "\u25CF";
     String white = "\u25CB";
     String empty = "\u2610";
@@ -21,6 +23,34 @@ public class ConsoleGameboard {
         initCBP();
         initCBT();
         fillGameBoardC();
+    }
+
+
+    public int setup(){
+        Scanner sc = new Scanner(System.in);
+        int p1Color = 0;
+        System.out.println("What color would you like to be?");
+        System.out.println("Please enter 0 for Black and 1 for White");
+        p1Color = sc.nextInt();
+        return p1Color;
+    }
+
+
+    //get color for possible 0
+    // flip method
+    public int getColor(int x, int y){
+        // player 1 is black
+        if (gameBoardC[x + 8 * y].equals(black)){
+            return 0;
+        }
+        //player 2 is white
+        if (gameBoardC[x + 8 * y].equals(white)){
+            return 1;
+        }
+        //empty tile
+        else {
+            return 2;
+        }
     }
 
     //initialize player board
@@ -55,6 +85,7 @@ public class ConsoleGameboard {
     }
 
     //print Board
+    //lots of prinouts
     public void printBoard() {
         System.out.println("Reference Board");
         for(int i = 0; i < 64; i++) {
@@ -102,4 +133,7 @@ public class ConsoleGameboard {
         }
         System.out.println();
     }
+
+
+
 }

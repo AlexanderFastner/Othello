@@ -3,16 +3,15 @@ import java.util.Random;
 import szte.mi.*;
 
 public class Runner {
-
     public static void main(String [] args) {
 
         Scanner sc = new Scanner(System.in);
-
         //ask if PVP or PVAI
         System.out.println("Would you like to play PVP or against the AI");
         System.out.println("Respond 0 for PVP and 1 for AI");
         int gametype = sc.nextInt();
 
+        //idiot testing
         while(gametype < 0 || gametype > 1){
             System.out.println("Please enter 0 for PVP and 1 for AI");
             gametype = sc.nextInt();
@@ -65,6 +64,7 @@ public class Runner {
 
     //play game method
     public static void playGame(Player p1, Player p2) {
+
         Move lastMove = null;
         boolean gameRunning = true;
         //while the games going
@@ -81,6 +81,9 @@ public class Runner {
         }
         System.out.println("Game ended");
     }
+
+
+
 
 
 }
