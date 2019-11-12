@@ -27,18 +27,7 @@ public class ConsoleGameboard {
         fillGameBoardC();
     }
 
-
-    public int setup(){
-        Scanner sc = new Scanner(System.in);
-        int p1Color = 0;
-        System.out.println("What color would you like to be?");
-        System.out.println("Please enter 0 for Black and 1 for White");
-        p1Color = sc.nextInt();
-        return p1Color;
-    }
-
-
-    //get color for possible 0
+    //get color for possible
     // flip method
     public int getColor(int x, int y){
         // player 1 is black
@@ -61,7 +50,7 @@ public class ConsoleGameboard {
     //you can find player2 positions by comparing to gameBoardT
     //all fields in gameBoardT that are not player1, are by default player2
     public void initCBP() {
-        //Player1 is Black fill initial starting positions
+        //Black fills initial starting positions
         gameBoardP[28] = true;
         gameBoardP[35] = true;
     }
@@ -86,21 +75,28 @@ public class ConsoleGameboard {
         gameBoardC[36] = black;
     }
 
-    //check whos move it was
+    //check whose move it was
     //update all boards
-    public void updateBoard(Move move){
+    public void updateBoard(Move move,boolean playerC){
         int x = move.x;
         int y = move.y;
 
+        if (playerC) {
+            gameBoardP[x + 8 * y] = playerC;
+            gameBoardC[x + 8*y] = white;
+        }
+        else {
+            gameBoardC[x + 8*y] = black;
+        }
+        gameBoardT[x + 8*y] = true;
 
     }
-
 
     //print Board
     //lots of prinouts
     public void printBoard() {
         System.out.println();
-        System.out.println("gameBoardP");
+        System.out.print("gameBoardP");
         for (int i = 0; i < 64; i++) {
             if(i % 8 == 0) {
                 System.out.println();
@@ -113,7 +109,7 @@ public class ConsoleGameboard {
 
         }
         System.out.println();
-        System.out.println("gameBoardT");
+        System.out.print("gameBoardT");
         for (int i = 0; i < 64; i++) {
             if(i % 8 == 0) {
                 System.out.println();
@@ -126,7 +122,7 @@ public class ConsoleGameboard {
 
         }
         System.out.println();
-        System.out.println("gameBoardC");
+        System.out.print("gameBoardC");
         for (int i = 0; i < 64; i++) {
             if(i % 8 == 0) {
                 System.out.println();

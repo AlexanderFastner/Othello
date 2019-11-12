@@ -9,8 +9,9 @@ public class Human implements Player {
     ConsoleGameboard cgb;
     //color of this Human
     int pColor;
-    //helper for next Move
-    int curY = 0;
+
+    ArrayList<Move> possibleMoves = new ArrayList<Move>();
+
 
     //create dir vectors
     Pair TOPLEFT = new Pair(-1, -1);
@@ -23,8 +24,6 @@ public class Human implements Player {
     Pair BOTTOMRIGHT = new Pair(1, 1);
     Pair [] vector = {TOPLEFT, TOPCENTER, TOPRIGHT, CENTERLEFT, CENTERRIGHT, BOTTOMCENTER, BOTTOMLEFT, BOTTOMRIGHT};
 
-    ArrayList<Move> possibleMoves = new ArrayList<Move>();
-
     //each player has their own board
     //communicate only through moves
     public Human() {
@@ -33,16 +32,15 @@ public class Human implements Player {
 
     @Override
     public void init(int order, long t, Random rnd) {
-        order = cgb.setup();
         pColor = order;
     }
 
-
     @Override
     public Move nextMove(Move prevMove, long tOpponent, long t) {
-
         //making array of valid moves for the current game State
+        possibleMoves.clear();
         Move temp;
+        int curY =0;
         for(int i = 0; i < 64; i++){
             temp = new Move(i%8, curY);
             if(i != 0 && temp.x % 8 == 0){
@@ -58,16 +56,19 @@ public class Human implements Player {
         }
 
         //debugging
+        System.out.print("Possible Moves:");
         for(int i = 0; i < possibleMoves.size(); i++){
-            System.out.print(possibleMoves.get(i).x + "," + possibleMoves.get(i).y + " ");
+            System.out.print(possibleMoves.get(i).x + "," + (possibleMoves.get(i).y + " "));
         }
         System.out.println();
 
+
+        //check input
         Move posMove = moveInputs();
         boolean ValidMove = false;
         while(!ValidMove) {
             for (int i = 0; i < possibleMoves.size(); i++) {
-                if (possibleMoves.get(i).x == posMove.x && possibleMoves.get(i).y == posMove.y) {
+                if ((possibleMoves.get(i).x == posMove.x) && (possibleMoves.get(i).y == posMove.y)) {
                     System.out.println("This is a valid move");
                     ValidMove = true;
                 }
@@ -79,6 +80,13 @@ public class Human implements Player {
         }
 
         //update the board
+        //black is 0 white is 1
+//        if(pColor == 0) {
+//            cgb.updateBoard(posMove, true);
+//        }
+//        if(pColor == 1) {
+//            cgb.updateBoard(posMove, false);
+//        }
 
         return posMove;
     }
@@ -113,13 +121,12 @@ public class Human implements Player {
             return false;
         }
         //check if theres a possible flip
-        if (!possibleFlip(x, y, pColor)){
-            return false;
+        if (possibleFlip(x, y, pColor)){
+            return true;
         }
-        return true;
+        return false;
     }
 
-    int c = 0;
     //checks if you can get a flip on this xy
     public boolean possibleFlip(int x, int y, int playerColor){
 
@@ -130,11 +137,14 @@ public class Human implements Player {
             //check if would be in bounds
             if ((x + vector[i].getX() >= 0) && (8 * (y + vector[i].getY()) >= 0)) {
                 if ((x + vector[i].getX() <= 7) && (y + vector[i].getY() <= 7)){
+                    //color of the piece in the dir of vector is pieceColor
                     pieceColor = cgb.getColor(x + vector[i].getX(), (y + vector[i].getY()));
                     //if there is a neighboring piece of a different color
                     if (pieceColor != playerColor && pieceColor != 2){
+
                         //if found continue in that dir until your piece is found
                         return flipHelper(x + vector[i].getX(), (y + vector[i].getY()), playerColor, i);
+
                     }
                 }
             }

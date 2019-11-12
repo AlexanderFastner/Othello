@@ -37,8 +37,8 @@ public class Runner {
         Random rnd = new Random();
         //init Player Objs
         for (int i = 0; i < Rounds; ++i) {
-            p1.init(0, 8, rnd);
-            p2.init(1, 8, rnd);
+            p1.init(1, 8, rnd);
+            p2.init(0, 8, rnd);
             playGame(p1, p2);
             playGame(p2, p1);
         }
@@ -49,7 +49,6 @@ public class Runner {
         //if valid, make move and pass arguements on in nextMove
 
     }
-
 
     //Is the game still running
        public static boolean checkStatus() {
@@ -66,15 +65,17 @@ public class Runner {
         boolean gameRunning = true;
         //while the games going
         while(gameRunning) {
-            System.out.println("It is Player1's turn");
+            System.out.println("It is Player1's turn. Color is : " + ((Human) p1).pColor);
             lastMove = p1.nextMove(lastMove, 0, 0);
+            ((Human) p1).getBoard().updateBoard(lastMove, true);
             ((Human) p1).getBoard().printBoard();
 
             if (!checkStatus()){
                 break;
             }
-            System.out.println("It is Player2's turn");
+            System.out.println("It is Player2's turn. Color is : " + ((Human) p2).pColor);
             lastMove = p2.nextMove(lastMove, 0, 0);
+            ((Human) p2).getBoard().updateBoard(lastMove, false);
             ((Human) p2).getBoard().printBoard();
 
             gameRunning = checkStatus();
