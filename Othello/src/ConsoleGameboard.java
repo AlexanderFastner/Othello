@@ -40,11 +40,11 @@ public class ConsoleGameboard {
     // flip method
     public int getColor(int x, int y){
         // player 1 is black
-        if (gameBoardC[x + 8 * y].equals(black)){
+        if (gameBoardC[x + (8 * y)].equals(black)){
             return 0;
         }
         //player 2 is white
-        if (gameBoardC[x + 8 * y].equals(white)){
+        if (gameBoardC[x + (8 * y)].equals(white)){
             return 1;
         }
         //empty tile

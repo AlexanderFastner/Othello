@@ -9,6 +9,8 @@ public class Human implements Player {
     ConsoleGameboard cgb;
     //color of this Human
     int pColor;
+    //helper for next Move
+    int curY = 0;
 
     //create dir vectors
     Pair TOPLEFT = new Pair(-1, -1);
@@ -36,16 +38,18 @@ public class Human implements Player {
 
     }
 
+
     @Override
     public Move nextMove(Move prevMove, long tOpponent, long t) {
 
         //making array of valid moves for the current game State
         Move temp = new Move(0, 0);
-        int curY = 0;
+
         for(int i = 0; i < 64; i++){
-            temp = new Move(i, curY);
+            temp = new Move(i%8, curY);
             if(i != 0 && temp.x % 8 == 0){
-                temp = new Move(0, curY+1);
+                curY++;
+                temp = new Move(0, curY);
             }
 
             if(cgb.gameBoardT[i] == false){
@@ -54,8 +58,9 @@ public class Human implements Player {
                 }
             }
         }
-        Move posMove = moveInputs();
+        System.out.println(possibleMoves);
 
+        Move posMove = moveInputs();
 
         while(!possibleMoves.contains(posMove)){
             System.out.println("This is not a valid move. Please select another");
@@ -87,59 +92,73 @@ public class Human implements Player {
 
     //check if a move is Valid
     public boolean checkValidMove(Move move) {
-        //check if occupied space
         int x = move.x;
         int y = move.y;
+
+        //check if occupied space
         if(cgb.gameBoardT[x+(8*y)] == true){
             System.out.println("This space is occupied. Please select another square");
-            checkValidMove(move);
+            return false;
         }
         //check if theres a possible flip
-        if (!possibleFlip(x, y, pColor, 0, 0)){
-            System.out.println("Not a valid move");
-            checkValidMove(move);
+        if (!possibleFlip(x, y, pColor)){
+            return false;
+
         }
         return true;
     }
 
     //checks if you can get a flip on this xy
-    public boolean possibleFlip(int x, int y, int playerColor, int start, int counter){
+    public boolean possibleFlip(int x, int y, int playerColor){
+
+        int pieceColor = 2;
 
         //for each dir in vector
         for(int i = 0; i < vector.length; i++){
 
             //check for opposing piece
-            int pieceColor = 0;
 
             //check if would be in bounds
-
             if ((x + vector[i].getX() >= 0) && (8 * (y + vector[i].getY()) >= 0)) {
-                pieceColor = cgb.getColor(x + vector[i].getX(), (8 * (y + vector[i].getY())));
+                if ((x + vector[i].getX()) + (8 * (y + vector[i].getY())) < 64){
+                    pieceColor = cgb.getColor(x + vector[i].getX(), (y + vector[i].getY()));
+                }
             }
-
             //if there is a neighboring piece of a different color
-            //recursivly call possible flip in the same direction and add 1 to counter
-            if (pieceColor != playerColor){
-                possibleFlip(x + vector[i].getX(), (8 *(y + vector[i].getY())), playerColor, i, counter+1);
+            if (pieceColor != playerColor && pieceColor != 2){
+                //if found continue in that dir until your piece is found
+                return flipHelper(x + vector[i].getX(), (y + vector[i].getY()), playerColor, i);
             }
-            //if at least 1 opposing piece is between the possible placement and another of the same players pieces a flip is possible
-            if (counter > 0 && pieceColor == playerColor){
-                return true;
-            }
-            //if an empty square is found before another players tile return false
-            if(counter > 0 && pieceColor == 2){
-                return false;
-            }
-
+            return false;
         }
-
-
-        //if found continue in that dir until your piece is found
-        //if not found break
-
-        //if no possible flips are found
         return false;
     }
+
+    public boolean flipHelper(int x, int y, int playerColor, int direction){
+
+        int pieceColor = 2;
+        //check bounds
+        if ((x + vector[direction].getX() >= 0) && (8 * (y + vector[direction].getY()) >= 0)) {
+            if ((x + vector[direction].getX()) + (8 * (y + vector[direction].getY())) < 64){
+                //if at least 1 opposing piece is between the possible placement and another of the same players pieces a flip is possible
+                pieceColor = cgb.getColor(x + vector[direction].getX(), (y + vector[direction].getY()));
+                if (pieceColor == playerColor){
+                    return true;
+                }
+                //if an empty square is found before another players tile return false
+                if(pieceColor == 2){
+                    return false;
+                }
+                //if another piece of player color is found
+                else {
+                    flipHelper(x + vector[direction].getX(), (y + vector[direction].getY()), playerColor, direction);
+                }
+            }
+        }
+        //if board edge is reached
+        return false;
+    }
+
 
     //getter
     public ConsoleGameboard getBoard() {
