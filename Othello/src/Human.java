@@ -29,12 +29,12 @@ public class Human implements Player {
     //communicate only through moves
     public Human() {
         cgb = new ConsoleGameboard();
-        pColor = cgb.setup();
     }
 
     @Override
     public void init(int order, long t, Random rnd) {
-
+        order = cgb.setup();
+        pColor = order;
     }
 
 
@@ -61,12 +61,25 @@ public class Human implements Player {
         for(int i = 0; i < possibleMoves.size(); i++){
             System.out.print(possibleMoves.get(i).x + "," + possibleMoves.get(i).y + " ");
         }
+        System.out.println();
 
         Move posMove = moveInputs();
-        while(!possibleMoves.contains(posMove)){
-            System.out.println("This is not a valid move. Please select another");
-            posMove = moveInputs();
+        boolean ValidMove = false;
+        while(!ValidMove) {
+            for (int i = 0; i < possibleMoves.size(); i++) {
+                if (possibleMoves.get(i).x == posMove.x && possibleMoves.get(i).y == posMove.y) {
+                    System.out.println("This is a valid move");
+                    ValidMove = true;
+                }
+            }
+            if(!ValidMove) {
+                System.out.println("This is not a valid move. Please select another");
+                posMove = moveInputs();
+            }
         }
+
+        //update the board
+
         return posMove;
     }
 
@@ -118,11 +131,9 @@ public class Human implements Player {
             if ((x + vector[i].getX() >= 0) && (8 * (y + vector[i].getY()) >= 0)) {
                 if ((x + vector[i].getX() <= 7) && (y + vector[i].getY() <= 7)){
                     pieceColor = cgb.getColor(x + vector[i].getX(), (y + vector[i].getY()));
-//                    System.out.println(pieceColor);
                     //if there is a neighboring piece of a different color
                     if (pieceColor != playerColor && pieceColor != 2){
                         //if found continue in that dir until your piece is found
-//                        System.out.println(flipHelper(x + vector[i].getX(), (y + vector[i].getY()), playerColor, i));
                         return flipHelper(x + vector[i].getX(), (y + vector[i].getY()), playerColor, i);
                     }
                 }
@@ -139,6 +150,7 @@ public class Human implements Player {
             if ((x + vector[direction].getX()) + (8 * (y + vector[direction].getY())) < 64){
                 //if at least 1 opposing piece is between the possible placement and another of the same players pieces a flip is possible
                 pieceColor = cgb.getColor(x + vector[direction].getX(), (y + vector[direction].getY()));
+                //if another piece of player color is found exit with true
                 if (pieceColor == playerColor){
                     return true;
                 }
@@ -146,7 +158,7 @@ public class Human implements Player {
                 if(pieceColor == 2){
                     return false;
                 }
-                //if another piece of player color is found
+                //if another piece of opposing player color is found go again
                 else {
                     flipHelper(x + vector[direction].getX(), (y + vector[direction].getY()), playerColor, direction);
                 }
@@ -157,9 +169,13 @@ public class Human implements Player {
     }
 
 
-    //getter
+    //getters
     public ConsoleGameboard getBoard() {
         return cgb;
+    }
+
+    public int getpColor(){
+        return this.pColor;
     }
 
 }

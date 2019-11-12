@@ -1,3 +1,5 @@
+import szte.mi.Move;
+
 import java.util.Arrays;
 import java.util.Scanner;
 
@@ -84,19 +86,19 @@ public class ConsoleGameboard {
         gameBoardC[36] = black;
     }
 
+    //check whos move it was
+    //update all boards
+    public void updateBoard(Move move){
+        int x = move.x;
+        int y = move.y;
+
+
+    }
+
+
     //print Board
     //lots of prinouts
     public void printBoard() {
-        System.out.println("Reference Board");
-        for(int i = 0; i < 64; i++) {
-            if(i % 8 ==0) {
-                System.out.println();
-                System.out.print(i + " ");
-            }
-            else {
-                System.out.print(i + " ");
-            }
-        }
         System.out.println();
         System.out.println("gameBoardP");
         for (int i = 0; i < 64; i++) {

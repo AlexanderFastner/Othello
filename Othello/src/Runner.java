@@ -44,13 +44,10 @@ public class Runner {
         }
 
         //each player has their own board
-        ((Human) p1).getBoard().printBoard();
-
-        //check valid moves
-
 
 
         //if valid, make move and pass arguements on in nextMove
+
     }
 
 
@@ -69,11 +66,14 @@ public class Runner {
         boolean gameRunning = true;
         //while the games going
         while(gameRunning) {
+            System.out.println("It is Player1's turn");
             lastMove = p1.nextMove(lastMove, 0, 0);
             ((Human) p1).getBoard().printBoard();
+
             if (!checkStatus()){
                 break;
             }
+            System.out.println("It is Player2's turn");
             lastMove = p2.nextMove(lastMove, 0, 0);
             ((Human) p2).getBoard().printBoard();
 
