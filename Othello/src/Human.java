@@ -30,7 +30,6 @@ public class Human implements Player {
     public Human() {
         cgb = new ConsoleGameboard();
         pColor = cgb.setup();
-
     }
 
     @Override
@@ -43,8 +42,7 @@ public class Human implements Player {
     public Move nextMove(Move prevMove, long tOpponent, long t) {
 
         //making array of valid moves for the current game State
-        Move temp = new Move(0, 0);
-
+        Move temp;
         for(int i = 0; i < 64; i++){
             temp = new Move(i%8, curY);
             if(i != 0 && temp.x % 8 == 0){
@@ -52,22 +50,23 @@ public class Human implements Player {
                 temp = new Move(0, curY);
             }
 
-            if(cgb.gameBoardT[i] == false){
-                if (checkValidMove(temp)){
+            if (cgb.gameBoardT[i] == false) {
+                if (checkValidMove(temp)) {
                     possibleMoves.add(temp);
                 }
             }
         }
-        System.out.println(possibleMoves);
+
+        //debugging
+        for(int i = 0; i < possibleMoves.size(); i++){
+            System.out.print(possibleMoves.get(i).x + "," + possibleMoves.get(i).y + " ");
+        }
 
         Move posMove = moveInputs();
-
         while(!possibleMoves.contains(posMove)){
             System.out.println("This is not a valid move. Please select another");
             posMove = moveInputs();
         }
-
-
         return posMove;
     }
 
@@ -103,11 +102,11 @@ public class Human implements Player {
         //check if theres a possible flip
         if (!possibleFlip(x, y, pColor)){
             return false;
-
         }
         return true;
     }
 
+    int c = 0;
     //checks if you can get a flip on this xy
     public boolean possibleFlip(int x, int y, int playerColor){
 
@@ -115,21 +114,19 @@ public class Human implements Player {
 
         //for each dir in vector
         for(int i = 0; i < vector.length; i++){
-
-            //check for opposing piece
-
             //check if would be in bounds
             if ((x + vector[i].getX() >= 0) && (8 * (y + vector[i].getY()) >= 0)) {
-                if ((x + vector[i].getX()) + (8 * (y + vector[i].getY())) < 64){
+                if ((x + vector[i].getX() <= 7) && (y + vector[i].getY() <= 7)){
                     pieceColor = cgb.getColor(x + vector[i].getX(), (y + vector[i].getY()));
+//                    System.out.println(pieceColor);
+                    //if there is a neighboring piece of a different color
+                    if (pieceColor != playerColor && pieceColor != 2){
+                        //if found continue in that dir until your piece is found
+//                        System.out.println(flipHelper(x + vector[i].getX(), (y + vector[i].getY()), playerColor, i));
+                        return flipHelper(x + vector[i].getX(), (y + vector[i].getY()), playerColor, i);
+                    }
                 }
             }
-            //if there is a neighboring piece of a different color
-            if (pieceColor != playerColor && pieceColor != 2){
-                //if found continue in that dir until your piece is found
-                return flipHelper(x + vector[i].getX(), (y + vector[i].getY()), playerColor, i);
-            }
-            return false;
         }
         return false;
     }
