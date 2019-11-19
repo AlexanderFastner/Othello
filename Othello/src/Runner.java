@@ -59,24 +59,26 @@ public class Runner {
         }
 
     //play game method
-    public static void playGame(Player p1, Player p2) {
+        public static void playGame(Player p1, Player p2) {
 
         Move lastMove = null;
         boolean gameRunning = true;
         //while the games going
         while(gameRunning) {
+            ((Human) p1).getBoard().printBoard();
             System.out.println("It is Player1's turn. Color is : " + ((Human) p1).pColor);
             lastMove = p1.nextMove(lastMove, 0, 0);
             ((Human) p1).getBoard().updateBoard(lastMove, true);
-            ((Human) p1).getBoard().printBoard();
+            ((Human) p2).getBoard().updateBoard(lastMove, true);
 
             if (!checkStatus()){
                 break;
             }
+            ((Human) p2).getBoard().printBoard();
             System.out.println("It is Player2's turn. Color is : " + ((Human) p2).pColor);
             lastMove = p2.nextMove(lastMove, 0, 0);
+            ((Human) p1).getBoard().updateBoard(lastMove, false);
             ((Human) p2).getBoard().updateBoard(lastMove, false);
-            ((Human) p2).getBoard().printBoard();
 
             gameRunning = checkStatus();
         }

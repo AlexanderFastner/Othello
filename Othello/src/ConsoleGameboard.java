@@ -11,7 +11,6 @@ public class ConsoleGameboard {
     boolean [] gameBoardT;
     //BoardC is to look pretty
     String [] gameBoardC;
-
     //unicode for boardC
     String black = "\u25CF";
     String white = "\u25CB";
@@ -27,8 +26,7 @@ public class ConsoleGameboard {
         fillGameBoardC();
     }
 
-    //get color for possible
-    // flip method
+    //get color for possible flip method
     public int getColor(int x, int y){
         // player 1 is black
         if (gameBoardC[x + (8 * y)].equals(black)){
@@ -42,6 +40,17 @@ public class ConsoleGameboard {
         else {
             return 2;
         }
+    }
+
+    public void setColor(int x, int y, int color){
+
+        if(color == 0){
+            gameBoardC[x + (8 * y)] = black;
+        }
+        else {
+            gameBoardC[x + (8 * y)] = white;
+        }
+
     }
 
     //initialize player board
@@ -75,9 +84,11 @@ public class ConsoleGameboard {
         gameBoardC[36] = black;
     }
 
+    //if a move is not null
     //check whose move it was
     //update all boards
-    public void updateBoard(Move move,boolean playerC){
+    //find pieces to flip
+    public void updateBoard(Move move, boolean playerC){
         int x = move.x;
         int y = move.y;
 

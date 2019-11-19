@@ -1,0 +1,12 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="MyOthello">
+    <output-path>$PROJECT_DIR$/out/artifacts/MyOthello</output-path>
+    <root id="archive" name="MyOthello.jar">
+      <element id="module-output" name="Othello" />
+      <element id="module-source" name="Othello" />
+      <element id="directory" name="META-INF">
+        <element id="file-copy" path="$USER_HOME$/Desktop/META-INF/MANIFEST.MF" />
+      </element>
+    </root>
+  </artifact>
+</component>
