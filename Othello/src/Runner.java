@@ -37,8 +37,8 @@ public class Runner {
         Random rnd = new Random();
         //init Player Objs
         for (int i = 0; i < Rounds; ++i) {
-            p1.init(1, 8, rnd);
-            p2.init(0, 8, rnd);
+            p1.init(0, 8, rnd);
+            p2.init(1, 8, rnd);
             playGame(p1, p2);
             playGame(p2, p1);
         }
@@ -68,25 +68,41 @@ public class Runner {
             ((Human) p1).getBoard().printBoard();
             System.out.println("It is Player1's turn. Color is : " + ((Human) p1).pColor);
             lastMove = p1.nextMove(lastMove, 0, 0);
-            ((Human) p1).getBoard().updateBoard(lastMove, true);
-            ((Human) p2).getBoard().updateBoard(lastMove, true);
+            //update both Players boards with the last move
+            ((Human) p1).getBoard().updateBoard(lastMove, ((Human) p1).color);
+            ((Human) p2).getBoard().updateBoard(lastMove, ((Human) p1).color);
+            //update the flipped pieces
+            for (int i = 0; i < ((Human) p1).toFlip.size(); i++) {
+                ((Human) p1).getBoard().updateBoard(((Human) p1).toFlip.get(i), ((Human) p1).color);
+                ((Human) p2).getBoard().updateBoard(((Human) p1).toFlip.get(i), ((Human) p1).color);
+                System.out.println(((Human) p1).toFlip.get(i).x);
+                System.out.println(((Human) p1).toFlip.get(i).y);
+            }
+            ((Human) p1).toFlip.clear();
 
             if (!checkStatus()){
                 break;
             }
+
             ((Human) p2).getBoard().printBoard();
             System.out.println("It is Player2's turn. Color is : " + ((Human) p2).pColor);
             lastMove = p2.nextMove(lastMove, 0, 0);
-            ((Human) p1).getBoard().updateBoard(lastMove, false);
-            ((Human) p2).getBoard().updateBoard(lastMove, false);
+            //update both Players boards with the last move
+            ((Human) p1).getBoard().updateBoard(lastMove, ((Human) p2).color);
+            ((Human) p2).getBoard().updateBoard(lastMove, ((Human) p2).color);
+            //update the flipped pieces
+            for (int i = 0; i < ((Human) p1).toFlip.size(); i++) {
+                ((Human) p2).getBoard().updateBoard(((Human) p2).toFlip.get(i), ((Human) p2).color);
+                ((Human) p1).getBoard().updateBoard(((Human) p2).toFlip.get(i), ((Human) p2).color);
+            }
+            ((Human) p2).toFlip.clear();
+
+
 
             gameRunning = checkStatus();
         }
         System.out.println("Game ended");
     }
-
-
-
 
 
 }

@@ -12,8 +12,8 @@ public class ConsoleGameboard {
     //BoardC is to look pretty
     String [] gameBoardC;
     //unicode for boardC
-    String black = "\u25CF";
-    String white = "\u25CB";
+    String white = "\u25CF";
+    String black = "\u25CB";
     String empty = "\u2610";
 
     //Constructor
@@ -23,7 +23,7 @@ public class ConsoleGameboard {
         gameBoardC = new String[64];
         initCBP();
         initCBT();
-        fillGameBoardC();
+        initCBC();
     }
 
     //get color for possible flip method
@@ -74,14 +74,14 @@ public class ConsoleGameboard {
     }
 
     //initial setup of cmd line visual board
-    public void fillGameBoardC(){
+    public void initCBC(){
         for(int i = 0; i < 64; i++){
             gameBoardC[i] = empty;
         }
-        gameBoardC[27] = black;
-        gameBoardC[28] = white;
-        gameBoardC[35] = white;
-        gameBoardC[36] = black;
+        gameBoardC[27] = white;
+        gameBoardC[28] = black;
+        gameBoardC[35] = black;
+        gameBoardC[36] = white;
     }
 
     //if a move is not null
@@ -94,10 +94,10 @@ public class ConsoleGameboard {
 
         if (playerC) {
             gameBoardP[x + 8 * y] = playerC;
-            gameBoardC[x + 8*y] = white;
+            gameBoardC[x + 8*y] = black;
         }
         else {
-            gameBoardC[x + 8*y] = black;
+            gameBoardC[x + 8*y] = white;
         }
         gameBoardT[x + 8*y] = true;
 
@@ -106,32 +106,32 @@ public class ConsoleGameboard {
     //print Board
     //lots of prinouts
     public void printBoard() {
-        System.out.println();
-        System.out.print("gameBoardP");
-        for (int i = 0; i < 64; i++) {
-            if(i % 8 == 0) {
-                System.out.println();
-            }
-            if (gameBoardP[i] == false) {
-                System.out.print(" 0");
-            } else {
-                System.out.print(" 1");
-            }
-
-        }
-        System.out.println();
-        System.out.print("gameBoardT");
-        for (int i = 0; i < 64; i++) {
-            if(i % 8 == 0) {
-                System.out.println();
-            }
-            if (gameBoardT[i] == false) {
-                System.out.print(" 0");
-            } else {
-                System.out.print(" 1");
-            }
-
-        }
+//        System.out.println();
+//        System.out.print("gameBoardP");
+//        for (int i = 0; i < 64; i++) {
+//            if(i % 8 == 0) {
+//                System.out.println();
+//            }
+//            if (gameBoardP[i] == false) {
+//                System.out.print(" 0");
+//            } else {
+//                System.out.print(" 1");
+//            }
+//
+//        }
+//        System.out.println();
+//        System.out.print("gameBoardT");
+//        for (int i = 0; i < 64; i++) {
+//            if(i % 8 == 0) {
+//                System.out.println();
+//            }
+//            if (gameBoardT[i] == false) {
+//                System.out.print(" 0");
+//            } else {
+//                System.out.print(" 1");
+//            }
+//
+//        }
         System.out.println();
         System.out.print("gameBoardC");
         for (int i = 0; i < 64; i++) {
