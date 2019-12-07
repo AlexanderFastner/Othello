@@ -6,7 +6,8 @@ public class AI implements Player {
     ConsoleGameboard cgb;
 
     public AI(){
-        cgb = new ConsoleGameboard();
+        //TODO player color
+        cgb = new ConsoleGameboard(0);
 
     }
 

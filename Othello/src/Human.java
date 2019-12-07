@@ -9,13 +9,14 @@ public class Human implements Player {
     ConsoleGameboard cgb;
     //color of this Human
     int pColor;
+    int intoColor;
+    boolean oColor;
     boolean color;
 
     int c = 0;
     ArrayList<Move> toFlip = new ArrayList<Move>();
 
     ArrayList<Move> possibleMoves = new ArrayList<Move>();
-
 
     //create dir vectors
     Pair TOPLEFT = new Pair(-1, -1);
@@ -31,22 +32,41 @@ public class Human implements Player {
     //each player has their own board
     //communicate only through moves
     public Human() {
-        cgb = new ConsoleGameboard();
+        cgb = new ConsoleGameboard(pColor);
     }
 
     @Override
     public void init(int order, long t, Random rnd) {
         pColor = order;
         if(pColor == 0){
+            intoColor = 1;
+            oColor = false;
             color = true;
         }
         else {
+            intoColor = 0;
+            oColor = true;
             color = false;
         }
     }
 
     @Override
     public Move nextMove(Move prevMove, long tOpponent, long t) {
+
+        //update the board with prevMove
+        cgb.updateBoard(prevMove, oColor);
+        //TODO carry out opponents flips
+
+        //call fliphelper in all 8 dir for the opponents move
+        if (prevMove != null) {
+            for (int i = 0; i < vector.length; i++) {
+                flipHelper(prevMove.x, prevMove.y, intoColor, i, true);
+            }
+        }
+
+        //output board
+        cgb.printBoard();
+
         //making array of valid moves for the current game State
         possibleMoves.clear();
         Move temp;
@@ -93,11 +113,15 @@ public class Human implements Player {
             }
         }
 
-        //flip pieces
-        //call fliphelper in all 8 dir
+        //update board with this players move
+        cgb.updateBoard(posMove, color);
+        //TODO update board with this players flip
         for (int i = 0; i < vector.length; i++){
-            flipHelper(posMove.x, posMove.y, this.pColor, i, true);
+            flipHelper(posMove.x, posMove.y, pColor, i, true);
         }
+
+
+
         return posMove;
     }
 
@@ -225,5 +249,6 @@ public class Human implements Player {
     public int getpColor(){
         return this.pColor;
     }
+
 
 }
