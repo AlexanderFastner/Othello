@@ -111,6 +111,22 @@ public class ConsoleGameboard {
 
     }
 
+    //checks if board is full
+    public boolean isFull(){
+        int counter = 0;
+        for(int i = 0; i < 64; i++) {
+            if (gameBoardT[i]){
+                counter++;
+            }
+        }
+        if(counter == 64){
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
     //print Board
     //lots of prinouts
     public void printBoard() {

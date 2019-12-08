@@ -3,6 +3,7 @@ import java.util.Random;
 import szte.mi.*;
 
 public class Runner {
+
     public static void main(String [] args) {
 
         Scanner sc = new Scanner(System.in);
@@ -16,22 +17,19 @@ public class Runner {
             System.out.println("Please enter 0 for PVP and 1 for AI");
             gametype = sc.nextInt();
         }
-
         //create players based on selected Gametype
         //default
         Player p1 = new Human();
         Player p2 = new Human();
         //selection
-//        if(gametype == 0) {
-//            Player p1 = new Human();
-//            Player p2 = new Human();
-//        }
-//        if(gametype == 1) {
-//            Player p1 = new Human();
-//            Player p2 = new AI();
-//        }
-
-
+        if(gametype == 0) {
+             p1 = new Human();
+             p2 = new Human();
+        }
+        if(gametype == 1) {
+             p1 = new Human();
+             p2 = new AI();
+        }
         int Rounds = 6;
         //random
         Random rnd = new Random();
@@ -46,22 +44,26 @@ public class Runner {
     }
 
     //Is the game still running
-       public static boolean checkStatus() {
-
-        int counter = 0;
-        //all occupied
+       public static boolean checkStatus(Human p, int nullMoves) {
+            //all occupied
            for(int i = 0; i < 64; i++){
-               if()
-               counter++;
+               if(p.getBoard().isFull()){
+                   return false;
+               }
            }
-
-        //both players last moves are null
+            //both players last moves are null
+           if(nullMoves == 2){
+               System.out.println("There are no more possible moves for either player");
+               return false;
+           }
         return true;
        }
 
     //play game method
         public static void playGame(Player p1, Player p2) {
 
+        //nullMoves is for win condition
+        int nullMoves = 0;
         Move lastMove = null;
         boolean gameRunning = true;
         //while the games going
@@ -69,13 +71,19 @@ public class Runner {
             System.out.println("It is Player1's turn. Color is : " + ((Human) p1).pColor);
             lastMove = p1.nextMove(lastMove, 0, 0);
 
-            if (!checkStatus()){
+            if (lastMove == null) {
+                nullMoves++;
+            }
+            if (!checkStatus((((Human) p1)), nullMoves)){
                 break;
             }
             System.out.println("It is Player2's turn. Color is : " + ((Human) p2).pColor);
             lastMove = p2.nextMove(lastMove, 0, 0);
 
-            gameRunning = checkStatus();
+            if (lastMove == null) {
+                nullMoves++;
+            }
+            gameRunning = checkStatus(((Human) p2), nullMoves);
         }
         System.out.println("Game ended");
     }
