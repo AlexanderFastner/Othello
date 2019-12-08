@@ -13,7 +13,6 @@ public class Human implements Player {
     boolean oColor;
     boolean color;
 
-    int c = 0;
     ArrayList<Move> toFlip = new ArrayList<Move>();
 
     ArrayList<Move> possibleMoves = new ArrayList<Move>();
@@ -52,15 +51,13 @@ public class Human implements Player {
 
     @Override
     public Move nextMove(Move prevMove, long tOpponent, long t) {
-
         //update the board with prevMove
         cgb.updateBoard(prevMove, oColor);
-        //TODO carry out opponents flips
 
-        //call fliphelper in all 8 dir for the opponents move
+        //call reverseflip in all 8 dir for the opponents move
         if (prevMove != null) {
             for (int i = 0; i < vector.length; i++) {
-                flipHelper(prevMove.x, prevMove.y, intoColor, i, true);
+                reverseFlip(prevMove.x, prevMove.y, intoColor,i);
             }
         }
 
@@ -68,7 +65,6 @@ public class Human implements Player {
         cgb.printBoard();
 
         //making array of valid moves for the current game State
-        possibleMoves.clear();
         Move temp;
         int curY =0;
         for(int i = 0; i < 64; i++){
@@ -78,9 +74,8 @@ public class Human implements Player {
                 temp = new Move(0, curY);
             }
 
-
             if (cgb.gameBoardT[i] == false) {
-                if (checkValidMove(temp, this.pColor)) {
+                if (checkValidMove(temp, pColor)) {
                     possibleMoves.add(temp);
                 }
             }
@@ -103,6 +98,7 @@ public class Human implements Player {
                     ValidMove = true;
                 }
             }
+            //TODO move this out of while loop
             if(possibleMoves.size() == 0){
                 System.out.println("There are no possible moves for you");
                 return null;
@@ -117,11 +113,10 @@ public class Human implements Player {
         cgb.updateBoard(posMove, color);
         //TODO update board with this players flip
         for (int i = 0; i < vector.length; i++){
-            flipHelper(posMove.x, posMove.y, pColor, i, true);
+            reverseFlip(posMove.x, posMove.y, pColor,i);
         }
 
-
-
+        possibleMoves.clear();
         return posMove;
     }
 
@@ -157,13 +152,12 @@ public class Human implements Player {
 
     //checks if you can get a flip on this xy
     public boolean possibleFlip(int x, int y, int playerColor){
-
         int pieceColor = 2;
 
         //for each dir in vector
         for(int i = 0; i < vector.length; i++){
             //check if would be in bounds
-            if ((x + vector[i].getX() >= 0) && (8 * (y + vector[i].getY()) >= 0)) {
+            if ((x + vector[i].getX() >= 0) && (y + vector[i].getY() >= 0)) {
                 if ((x + vector[i].getX() <= 7) && (y + vector[i].getY() <= 7)){
                     //color of the piece in the dir of vector is pieceColor
                     pieceColor = cgb.getColor(x + vector[i].getX(), (y + vector[i].getY()));
@@ -171,7 +165,10 @@ public class Human implements Player {
                     if (pieceColor != playerColor && pieceColor != 2){
 
                         //if found continue in that dir until your piece is found
-                        return flipHelper(x + vector[i].getX(), (y + vector[i].getY()), playerColor, i, false);
+                        if(flipHelper(x + vector[i].getX(), (y + vector[i].getY()), playerColor, i)){
+                            return true;
+                        }
+
 
                     }
                 }
@@ -180,12 +177,11 @@ public class Human implements Player {
         return false;
     }
 
-    //known parameter is only used for checking on tiles where it is known that a flip is possible
-    public boolean flipHelper(int x, int y, int playerColor, int direction, boolean known){
+    public boolean flipHelper(int x, int y, int playerColor, int direction){
 
         int pieceColor;
         //check bounds
-        if ((x + vector[direction].getX() >= 0) && (8 * (y + vector[direction].getY()) >= 0)) {
+        if ((x + vector[direction].getX() >= 0) && (y + vector[direction].getY() >= 0)) {
             if ((x + vector[direction].getX()) + (8 * (y + vector[direction].getY())) < 64){
                 //if at least 1 opposing piece is between the possible placement and another of the same players pieces a flip is possible
                 pieceColor = cgb.getColor(x + vector[direction].getX(), (y + vector[direction].getY()));
@@ -193,17 +189,13 @@ public class Human implements Player {
                 if (pieceColor == playerColor){
                     return true;
                 }
-
-                if ((pieceColor != playerColor) && known && pieceColor != 2){
-                    reverseFlip(x , y , playerColor, direction);
-                }
                 //if an empty square is found before another players tile return false
                 if(pieceColor == 2){
                     return false;
                 }
                 //if another piece of opposing player color is found go again
                 else {
-                    flipHelper(x + vector[direction].getX(), (y + vector[direction].getY()), playerColor, direction, known);
+                    flipHelper(x + vector[direction].getX(), (y + vector[direction].getY()), playerColor, direction);
                 }
             }
         }
@@ -215,30 +207,30 @@ public class Human implements Player {
     //call flipHelper in all 8 dir until all same color pieces are found
     //if the same players piece is found is found go in opposite of direction and flip every piece on the way
     public void reverseFlip(int x, int y, int playerColor, int direction){
-        int px;
-        int py;
         Move toFliptemp;
         int pieceColor;
 
+        //now keep checking in the same dir
         pieceColor = cgb.getColor(x + vector[direction].getX(), (y + vector[direction].getY()));
-        if (pieceColor != playerColor){
-            c++;
+        //if another enemy piece is found do again
+        if ((pieceColor != playerColor)&&(pieceColor != 2)){
             toFliptemp = new Move(x + vector[direction].getX(),(y + vector[direction].getY()));
             toFlip.add(toFliptemp);
             reverseFlip(x + vector[direction].getX(), (y + vector[direction].getY()), playerColor, direction);
         }
-        if (pieceColor == playerColor){
-            //reset c
-            c = 0;
+        //This method is only called when at least 1 enemy piece was detected in this dir first
+        //so if a friendly piece is detected, end and carry out the flip
+        if ((pieceColor == playerColor)&& (toFlip.size() > 0)){
+            //for every element in toFlip
+            for(int i = 0; i < toFlip.size(); i++){
+                cgb.setColor(toFlip.get(i).x, toFlip.get(i).y, playerColor);
+            }
+            toFlip.clear();
         }
         if (pieceColor == 2){
-            //if it runs into an empty square none of the previous entries should be flipped, so remove those
-            while (c > 0) {
-                toFlip.remove(toFlip.size());
-                c--;
-            }
+            //if it runs into an empty square none of the previous entries should be flipped, so clear
+            toFlip.clear();
         }
-
     }
 
     //getters
@@ -247,7 +239,7 @@ public class Human implements Player {
     }
 
     public int getpColor(){
-        return this.pColor;
+        return pColor;
     }
 
 

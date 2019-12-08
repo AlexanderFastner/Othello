@@ -101,45 +101,45 @@ public class ConsoleGameboard {
         int y = move.y;
 
         if (playerC) {
-            gameBoardP[x + 8 * y] = playerC;
-            gameBoardC[x + 8*y] = black;
+            gameBoardP[x + (8*y)] = true;
+            gameBoardC[x + (8*y)] = black;
         }
         else {
-            gameBoardC[x + 8*y] = white;
+            gameBoardC[x + (8*y)] = white;
         }
-        gameBoardT[x + 8*y] = true;
+        gameBoardT[x + (8*y)] = true;
 
     }
 
     //print Board
     //lots of prinouts
     public void printBoard() {
-        System.out.println();
-        System.out.print("gameBoardP " + pColor);
-        for (int i = 0; i < 64; i++) {
-            if(i % 8 == 0) {
-                System.out.println();
-            }
-            if (gameBoardP[i] == false) {
-                System.out.print(" 0");
-            } else {
-                System.out.print(" 1");
-            }
-
-        }
-        System.out.println();
-        System.out.print("gameBoardT");
-        for (int i = 0; i < 64; i++) {
-            if(i % 8 == 0) {
-                System.out.println();
-            }
-            if (gameBoardT[i] == false) {
-                System.out.print(" 0");
-            } else {
-                System.out.print(" 1");
-            }
-
-        }
+//        System.out.println();
+//        System.out.print("gameBoardP " + pColor);
+//        for (int i = 0; i < 64; i++) {
+//            if(i % 8 == 0) {
+//                System.out.println();
+//            }
+//            if (gameBoardP[i] == false) {
+//                System.out.print(" 0");
+//            } else {
+//                System.out.print(" 1");
+//            }
+//
+//        }
+//        System.out.println();
+//        System.out.print("gameBoardT");
+//        for (int i = 0; i < 64; i++) {
+//            if(i % 8 == 0) {
+//                System.out.println();
+//            }
+//            if (gameBoardT[i] == false) {
+//                System.out.print(" 0");
+//            } else {
+//                System.out.print(" 1");
+//            }
+//
+//        }
         System.out.println();
         System.out.print("gameBoardC");
         for (int i = 0; i < 64; i++) {

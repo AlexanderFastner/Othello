@@ -62,14 +62,12 @@ public class Runner {
         while(gameRunning) {
             System.out.println("It is Player1's turn. Color is : " + ((Human) p1).pColor);
             lastMove = p1.nextMove(lastMove, 0, 0);
-            ((Human) p1).toFlip.clear();
 
             if (!checkStatus()){
                 break;
             }
             System.out.println("It is Player2's turn. Color is : " + ((Human) p2).pColor);
             lastMove = p2.nextMove(lastMove, 0, 0);
-            ((Human) p2).toFlip.clear();
 
             gameRunning = checkStatus();
         }
