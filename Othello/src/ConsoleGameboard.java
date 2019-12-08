@@ -18,7 +18,6 @@ public class ConsoleGameboard {
 
     int pColor;
 
-
     //Constructor
     public ConsoleGameboard(int pC) {
         gameBoardP = new boolean[64];
@@ -130,32 +129,6 @@ public class ConsoleGameboard {
     //print Board
     //lots of prinouts
     public void printBoard() {
-//        System.out.println();
-//        System.out.print("gameBoardP " + pColor);
-//        for (int i = 0; i < 64; i++) {
-//            if(i % 8 == 0) {
-//                System.out.println();
-//            }
-//            if (gameBoardP[i] == false) {
-//                System.out.print(" 0");
-//            } else {
-//                System.out.print(" 1");
-//            }
-//
-//        }
-//        System.out.println();
-//        System.out.print("gameBoardT");
-//        for (int i = 0; i < 64; i++) {
-//            if(i % 8 == 0) {
-//                System.out.println();
-//            }
-//            if (gameBoardT[i] == false) {
-//                System.out.print(" 0");
-//            } else {
-//                System.out.print(" 1");
-//            }
-//
-//        }
         System.out.print("gameBoardC");
         for (int i = 0; i < 64; i++) {
             if(i % 8 == 0) {

@@ -1,8 +1,6 @@
 import java.util.*;
-
 import szte.mi.*;
 import java.util.Scanner;
-
 
 public class Human implements Player {
 
@@ -245,6 +243,4 @@ public class Human implements Player {
     public int getpColor(){
         return pColor;
     }
-
-
 }

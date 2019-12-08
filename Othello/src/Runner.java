@@ -88,5 +88,4 @@ public class Runner {
         System.out.println("Game ended");
     }
 
-
 }
