@@ -1,23 +1,37 @@
+import javafx.geometry.Pos;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.layout.Pane;
+
 
 public class Tile extends Rectangle{
 
-
+    private GamePiece piece;
 
     public Tile(boolean color, int x, int y){
-        setWidth(x);
-        setHeight(y);
-        Rectangle border = new Rectangle(100, 100);
-        border.setStroke(Color.BLACK);
-        border.setStrokeWidth(3);
+        setWidth(Gui.tileSize);
+        setHeight(Gui.tileSize);
+
+        relocate(x * Gui.tileSize, y * Gui.tileSize);
         if(color) {
-            border.setFill(null);
+            setFill(Color.LIGHTGREEN);
         }
         else {
-            border.setFill(Color.GREEN);
+            setFill(Color.GREEN);
         }
 
+    }
+
+    public boolean hasPiece(){
+        return piece != null;
+    }
+
+    public GamePiece getPiece(){
+        return piece;
+    }
+
+    public void setPiece(GamePiece piece){
+        this.piece = piece;
     }
 
 
