@@ -48,10 +48,16 @@ public class Runner {
     //Is the game still running
        public static boolean checkStatus() {
 
-        //TODO add win condition
+        int counter = 0;
+        //all occupied
+           for(int i = 0; i < 64; i++){
+               if()
+               counter++;
+           }
 
-            return true;
-        }
+        //both players last moves are null
+        return true;
+       }
 
     //play game method
         public static void playGame(Player p1, Player p2) {

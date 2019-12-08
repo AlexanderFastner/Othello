@@ -140,7 +140,6 @@ public class ConsoleGameboard {
 //            }
 //
 //        }
-        System.out.println();
         System.out.print("gameBoardC");
         for (int i = 0; i < 64; i++) {
             if(i % 8 == 0) {

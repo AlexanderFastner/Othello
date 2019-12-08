@@ -210,26 +210,30 @@ public class Human implements Player {
         Move toFliptemp;
         int pieceColor;
 
-        //now keep checking in the same dir
-        pieceColor = cgb.getColor(x + vector[direction].getX(), (y + vector[direction].getY()));
-        //if another enemy piece is found do again
-        if ((pieceColor != playerColor)&&(pieceColor != 2)){
-            toFliptemp = new Move(x + vector[direction].getX(),(y + vector[direction].getY()));
-            toFlip.add(toFliptemp);
-            reverseFlip(x + vector[direction].getX(), (y + vector[direction].getY()), playerColor, direction);
-        }
-        //This method is only called when at least 1 enemy piece was detected in this dir first
-        //so if a friendly piece is detected, end and carry out the flip
-        if ((pieceColor == playerColor)&& (toFlip.size() > 0)){
-            //for every element in toFlip
-            for(int i = 0; i < toFlip.size(); i++){
-                cgb.setColor(toFlip.get(i).x, toFlip.get(i).y, playerColor);
+        if ((x + vector[direction].getX() >= 0) && (y + vector[direction].getY() >= 0)) {
+            if ((x + vector[direction].getX()) + (8 * (y + vector[direction].getY())) < 64) {
+                //now keep checking in the same dir
+                pieceColor = cgb.getColor(x + vector[direction].getX(), (y + vector[direction].getY()));
+                //if another enemy piece is found do again
+                if ((pieceColor != playerColor) && (pieceColor != 2)) {
+                    toFliptemp = new Move(x + vector[direction].getX(), (y + vector[direction].getY()));
+                    toFlip.add(toFliptemp);
+                    reverseFlip(x + vector[direction].getX(), (y + vector[direction].getY()), playerColor, direction);
+                }
+                //This method is only called when at least 1 enemy piece was detected in this dir first
+                //so if a friendly piece is detected, end and carry out the flip
+                if ((pieceColor == playerColor) && (toFlip.size() > 0)) {
+                    //for every element in toFlip
+                    for (int i = 0; i < toFlip.size(); i++) {
+                        cgb.setColor(toFlip.get(i).x, toFlip.get(i).y, playerColor);
+                    }
+                    toFlip.clear();
+                }
+                if (pieceColor == 2) {
+                    //if it runs into an empty square none of the previous entries should be flipped, so clear
+                    toFlip.clear();
+                }
             }
-            toFlip.clear();
-        }
-        if (pieceColor == 2){
-            //if it runs into an empty square none of the previous entries should be flipped, so clear
-            toFlip.clear();
         }
     }
 
