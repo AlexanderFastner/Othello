@@ -1,4 +1,6 @@
-public class GamePiece {
+public class GamePiece{
+
+
 
 
 }

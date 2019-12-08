@@ -4,6 +4,7 @@ import javafx.scene.shape.Rectangle;
 public class Tile extends Rectangle{
 
 
+
     public Tile(boolean color, int x, int y){
         setWidth(x);
         setHeight(y);
