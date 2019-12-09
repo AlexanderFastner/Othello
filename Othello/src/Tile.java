@@ -5,29 +5,10 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.layout.Pane;
+import szte.mi.Move;
 
 
 public class Tile extends Rectangle {
-
-    private int x;
-    private int y;
-
-    EventHandler<MouseEvent> eventHandler = new EventHandler<MouseEvent>() {
-        @Override
-        public void handle(MouseEvent e) {
-            if (e.getEventType() == MouseEvent.MOUSE_CLICKED) {
-                System.out.println(e.getEventType() + " at " + e.getSceneX() + "/" + e.getSceneY());
-                x = (int)(e.getSceneX() - 100)/100;
-                y = (int)(e.getSceneY() - 135)/100;
-                System.out.println(x + " " + y);
-
-            }
-            else {
-                System.out.println(e.getEventType());
-            }
-        }
-
-    };
 
     private GamePiece piece;
 
@@ -41,10 +22,6 @@ public class Tile extends Rectangle {
         else {
             setFill(Color.GREEN);
         }
-
-        //event handler
-
-        this.addEventHandler(MouseEvent.MOUSE_CLICKED, eventHandler);
 
     }
 

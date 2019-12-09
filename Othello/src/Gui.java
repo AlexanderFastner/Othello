@@ -8,6 +8,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
@@ -29,6 +30,31 @@ public class Gui  extends Application{
         launch(args);
     }
 
+    private int x;
+    private int y;
+
+    EventHandler<MouseEvent> eventHandler = new EventHandler<MouseEvent>() {
+        @Override
+        public void handle(MouseEvent e) {
+            if (e.getEventType() == MouseEvent.MOUSE_CLICKED) {
+                x = (int)(e.getSceneX() - 100)/100;
+                y = (int)(e.getSceneY() - 135)/100;
+                System.out.println(x + " " + y);
+
+                //check if its an occupied tile
+
+                //check if the move is in possible moves
+
+                //make the move and subsequent flips
+
+            }
+            else {
+                System.out.println(e.getEventType());
+            }
+        }
+
+    };
+
     private Parent makeBoard(){
         Pane root = new Pane();
         root.setPrefSize(width * tileSize, height * tileSize);
@@ -39,6 +65,8 @@ public class Gui  extends Application{
             for(int y = 0; y < height; y++){
                 //make new tiles, even tiles are white
                 Tile tile = new Tile(((x + y) % 2 == 0), x, y);
+                //event handler
+                tile.addEventHandler(MouseEvent.MOUSE_CLICKED, eventHandler);
                 tileGrid.getChildren().add(tile);
 
                 GamePiece piece = null;

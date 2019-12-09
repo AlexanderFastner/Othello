@@ -243,4 +243,5 @@ public class Human implements Player {
     public int getpColor(){
         return pColor;
     }
+
 }
