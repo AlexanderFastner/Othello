@@ -137,6 +137,19 @@ public class ConsoleGameboard {
             System.out.print(gameBoardC[i] + " ");
         }
         System.out.println();
+        System.out.print("gameBoardT");
+        for (int i = 0; i < 64; i++) {
+            if(i % 8 == 0) {
+                System.out.println();
+            }
+            if(gameBoardT[i] == true){
+                System.out.print(1 + " ");
+            }
+            else {
+                System.out.print(0 + " ");
+            }
+        }
+        System.out.println();
     }
 
 
