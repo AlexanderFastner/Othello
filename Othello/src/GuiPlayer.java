@@ -8,7 +8,7 @@ import java.util.Scanner;
 
 public class GuiPlayer implements Player {
 
-    ConsoleGameboard board;
+    ConsoleGameboard cgb;
     ArrayList<Move> possibleMoves = new ArrayList<Move>();
     int pColor;
     ArrayList<Move> toFlip = new ArrayList<Move>();
@@ -27,7 +27,7 @@ public class GuiPlayer implements Player {
 
 
     public GuiPlayer(){
-        board = new ConsoleGameboard(0);
+        cgb = new ConsoleGameboard(0);
     }
 
     @Override
@@ -53,7 +53,7 @@ public class GuiPlayer implements Player {
                 temp = new Move(0, curY);
             }
 
-            if (board.gameBoardT[i] == false) {
+            if (cgb.gameBoardT[i] == false) {
                 if (checkValidMove(temp, pColor)) {
                     possibleMoves.add(temp);
                 }
@@ -68,11 +68,9 @@ public class GuiPlayer implements Player {
         Scanner sc = new Scanner(System.in);
         int x = sc.nextInt();
         int y = sc.nextInt();
-        //TODO get input
 
         Move m = new Move(x, y);
 
-        //TODO find a way to update Gui.board
         return m;
     }
 
@@ -96,16 +94,13 @@ public class GuiPlayer implements Player {
             if ((x + vector[i].getX() >= 0) && (y + vector[i].getY() >= 0)) {
                 if ((x + vector[i].getX() <= 7) && (y + vector[i].getY() <= 7)){
                     //color of the piece in the dir of vector is pieceColor
-                    pieceColor = board.getColor(x + vector[i].getX(), (y + vector[i].getY()));
+                    pieceColor = cgb.getColor(x + vector[i].getX(), (y + vector[i].getY()));
                     //if there is a neighboring piece of a different color
                     if (pieceColor != playerColor && pieceColor != 2){
-
                         //if found continue in that dir until your piece is found
                         if(flipHelper(x + vector[i].getX(), (y + vector[i].getY()), playerColor, i)){
                             return true;
                         }
-
-
                     }
                 }
             }
@@ -120,7 +115,7 @@ public class GuiPlayer implements Player {
         if ((x + vector[direction].getX() >= 0) && (y + vector[direction].getY() >= 0)) {
             if ((x + vector[direction].getX()) + (8 * (y + vector[direction].getY())) < 64){
                 //if at least 1 opposing piece is between the possible placement and another of the same players pieces a flip is possible
-                pieceColor = board.getColor(x + vector[direction].getX(), (y + vector[direction].getY()));
+                pieceColor = cgb.getColor(x + vector[direction].getX(), (y + vector[direction].getY()));
                 //if another piece of player color is found exit with true
                 if (pieceColor == playerColor){
                     return true;
@@ -146,7 +141,7 @@ public class GuiPlayer implements Player {
         if ((x + vector[direction].getX() >= 0) && (y + vector[direction].getY() >= 0)) {
             if ((x + vector[direction].getX()) + (8 * (y + vector[direction].getY())) < 64) {
                 //now keep checking in the same dir
-                pieceColor = board.getColor(x + vector[direction].getX(), (y + vector[direction].getY()));
+                pieceColor = cgb.getColor(x + vector[direction].getX(), (y + vector[direction].getY()));
                 //if another enemy piece is found do again
                 if ((pieceColor != playerColor) && (pieceColor != 2)) {
                     toFliptemp = new Move(x + vector[direction].getX(), (y + vector[direction].getY()));
@@ -158,7 +153,7 @@ public class GuiPlayer implements Player {
                 if ((pieceColor == playerColor) && (toFlip.size() > 0)) {
                     //for every element in toFlip
                     for (int i = 0; i < toFlip.size(); i++) {
-                        board.setColor(toFlip.get(i).x, toFlip.get(i).y, playerColor);
+                        cgb.setColor(toFlip.get(i).x, toFlip.get(i).y, playerColor);
                     }
                     toFlip.clear();
                 }
