@@ -131,7 +131,7 @@ public class AI implements Player {
 
             for (int i = 0; i < bweights.length; i++) {
                 for (int j = 0; j < possibleMoves.size(); j++) {
-                    if (!((bweights[i].x == possibleMoves.get(j).x) && (bweights[i].y == possibleMoves.get(j).y))) {
+                    if (((bweights[i].x == possibleMoves.get(j).x) && (bweights[i].y == possibleMoves.get(j).y))) {
                         betterPossibleMoves.remove(possibleMoves.get(j));
                     }
                 }
