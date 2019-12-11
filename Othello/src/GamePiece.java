@@ -25,9 +25,6 @@ public class GamePiece extends StackPane {
             c.setStrokeWidth(3);
             c.setStroke(Color.BLACK);
         }
-
         getChildren().add(c);
-
     }
-
 }

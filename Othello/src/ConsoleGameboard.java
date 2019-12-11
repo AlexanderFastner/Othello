@@ -151,7 +151,4 @@ public class ConsoleGameboard {
         }
         System.out.println();
     }
-
-
-
 }

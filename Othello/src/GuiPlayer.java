@@ -73,8 +73,6 @@ public class GuiPlayer implements Player {
         Move m = new Move(x, y);
 
         //TODO find a way to update Gui.board
-
-
         return m;
     }
 
@@ -161,7 +159,6 @@ public class GuiPlayer implements Player {
                     //for every element in toFlip
                     for (int i = 0; i < toFlip.size(); i++) {
                         board.setColor(toFlip.get(i).x, toFlip.get(i).y, playerColor);
-
                     }
                     toFlip.clear();
                 }

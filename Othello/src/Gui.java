@@ -35,6 +35,8 @@ public class Gui  extends Application{
     private Group piecesG = new Group();
     Tile [][] board = new Tile[width][height];
     private boolean playerColor;
+    GuiPlayer p1;
+    GuiPlayer p2;
 
     public static void main(String[] args) {
         launch(args);
@@ -50,7 +52,10 @@ public class Gui  extends Application{
                 System.out.println(x + " " + y);
 
                 //check if the move is in possible moves
-
+                Move t = new Move(x, y);
+                for(int i = 0; i < p1.possibleMoves.size(); i ++){
+                    if((t.x == p1.possibleMoves.get(i).x)&&(t.y == p1.possibleMoves.get(i).y));
+                }
 
                 //make the move
                 System.out.println(board[x][y].hasPiece());
@@ -67,8 +72,6 @@ public class Gui  extends Application{
         }
 
     };
-
-
 
     public void updateBoard(Move move, boolean playerColor){
         int x = move.x;
@@ -132,7 +135,6 @@ public class Gui  extends Application{
 
         //start the gui
 
-
         //nullMoves is for win condition
         int nullMoves = 0;
         Move lastMove = null;
@@ -191,8 +193,8 @@ public class Gui  extends Application{
         window.show();
 
         //gui game
-        GuiPlayer p1 = new GuiPlayer();
-        GuiPlayer p2 = new GuiPlayer();
+         p1 = new GuiPlayer();
+         p2 = new GuiPlayer();
 
         int Rounds = 6;
         Random rnd = new Random();
@@ -201,14 +203,8 @@ public class Gui  extends Application{
             //init Player Objs
             p1.init(0, 8, rnd);
             p2.init(1, 8, rnd);
-            playGuiGame(p1, p2);
+            //playGuiGame(p1, p2);
         }
-
-
-
     }
-
-
-
 
 }

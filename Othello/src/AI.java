@@ -163,7 +163,6 @@ public class AI implements Player {
             System.out.println(selected.x + " " + selected.y);
         }
 
-
         //update with own move
         cgb.updateBoard(selected, color);
 
@@ -281,17 +280,10 @@ public class AI implements Player {
             toFlip.clear();
         }
     }
-
-
-
-
     public ConsoleGameboard getBoard() {
         return cgb;
     }
     public int getpColor(){
         return pColor;
     }
-
-
-
 }

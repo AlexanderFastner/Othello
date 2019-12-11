@@ -56,7 +56,6 @@ public class Runner {
 
             }
         }
-
     }
 
     //Is the game still running
@@ -119,7 +118,6 @@ public class Runner {
             System.out.println("Game ended");
     }
 
-
     //AI game method
     public static void playGameAI(Player p1, Player p2) {
 
@@ -148,5 +146,4 @@ public class Runner {
         }
         System.out.println("Game ended");
     }
-
 }
