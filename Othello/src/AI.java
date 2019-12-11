@@ -10,6 +10,7 @@ public class AI implements Player {
     boolean oColor;
     boolean color;
     ArrayList<Move> possibleMoves = new ArrayList<Move>();
+    ArrayList<Move> betterPossibleMoves = new ArrayList<>();
     ArrayList<Move> toFlip = new ArrayList<Move>();
 
     //create dir vectors
@@ -104,21 +105,62 @@ public class AI implements Player {
             System.out.print(possibleMoves.get(i).x + "," + (possibleMoves.get(i).y + " "));
         }
         System.out.println();
-
-        Move selected;
-        int selection;
-        //prioritize corners
-
-        //avoid spaces next to corners
-
-        //else select one at random
-        if(possibleMoves.size() > 0) {
-            selection = new Random().nextInt(possibleMoves.size());
-            selected = possibleMoves.get(selection);
-            System.out.println(selected.x + " " + selected.y);
-        }
-        else {
+        //if no moves return null
+        if(possibleMoves.size() == 0){
+            System.out.println("There are no possible moves for you");
             return null;
+        }
+
+        Move selected = null;
+        int selection = -1;
+        while (selected == null) {
+            //prioritize corners
+            for (int i = 0; i < gweights.length; i++) {
+                for (int j = 0; j < possibleMoves.size(); j++) {
+                    if ((gweights[i].x == possibleMoves.get(j).x) && (gweights[i].y == possibleMoves.get(j).y)) {
+                        System.out.println("My corner bitch");
+                        selected = possibleMoves.get(j);
+                        break;
+                    }
+                }
+            }
+            //avoid spaces next to corners
+            //generate a new arraylist - the bad moves
+            for(int i = 0; i < possibleMoves.size(); i++){
+                betterPossibleMoves.add(possibleMoves.get(i));
+            }
+
+            for (int i = 0; i < bweights.length; i++) {
+                for (int j = 0; j < possibleMoves.size(); j++) {
+                    if (!((bweights[i].x == possibleMoves.get(j).x) && (bweights[i].y == possibleMoves.get(j).y))) {
+                        betterPossibleMoves.remove(possibleMoves.get(j));
+                    }
+                }
+            }
+            System.out.println("Better Possible Moves: ");
+            for(int i = 0; i < betterPossibleMoves.size(); i++){
+                System.out.print(betterPossibleMoves.get(i).x + "," + (betterPossibleMoves.get(i).y + " "));
+            }
+
+            //select from better moves at random
+            if (betterPossibleMoves.size() > 0) {
+                selection = new Random().nextInt(betterPossibleMoves.size());
+                selected = betterPossibleMoves.get(selection);
+                break;
+            }
+            //else just select random
+            if (selected == null && possibleMoves.size() > 0) {
+                selection = new Random().nextInt(possibleMoves.size());
+                selected = possibleMoves.get(selection);
+            }
+            else {
+                return null;
+            }
+        }
+
+        //debugging
+        if(selected != null) {
+            System.out.println(selected.x + " " + selected.y);
         }
 
 
@@ -131,6 +173,7 @@ public class AI implements Player {
         }
         //clear possiblemoves
         possibleMoves.clear();
+        betterPossibleMoves.clear();
         return selected;
     }
 
