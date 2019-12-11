@@ -41,6 +41,7 @@ public class Gui  extends Application{
     GuiPlayer p1;
     AI p2;
     ArrayList<Move> possibleMoves = new ArrayList<Move>();
+    ArrayList<Move> betterPossibleMoves = new ArrayList<>();
     ArrayList<Move> toFlip = new ArrayList<Move>();
     int pColor;
 
@@ -56,6 +57,28 @@ public class Gui  extends Application{
     Pair BOTTOMRIGHT = new Pair(1, 1);
     Pair [] vector = {TOPLEFT, TOPCENTER, TOPRIGHT, CENTERLEFT, CENTERRIGHT, BOTTOMLEFT, BOTTOMCENTER, BOTTOMRIGHT};
 
+    //next to corners
+    Move bm01 = new Move(0, 1);
+    Move bm10 = new Move(1, 0);
+    Move bm11 = new Move(1, 1);
+    Move bm60 = new Move(6, 0);
+    Move bm61 = new Move(6, 1);
+    Move bm71 = new Move(7, 1);
+    Move bm06 = new Move(0, 6);
+    Move bm16 = new Move(1, 6);
+    Move bm17 = new Move(1, 7);
+    Move bm66 = new Move(6, 6);
+    Move bm67 = new Move(6, 7);
+    Move bm76 = new Move(7, 6);
+    //corners
+    Move gm00 = new Move(0, 0);
+    Move gm07 = new Move(0, 7);
+    Move gm70 = new Move(7, 0);
+    Move gm77 = new Move(7, 7);
+    //weight arrays
+    Move [] gweights = {gm00,gm07,gm70,gm77};
+    Move [] bweights = {bm01,bm10,bm11,bm60,bm61,bm71,bm06,bm16,bm17,bm66,bm67,bm76};
+
     public static void main(String[] args) {
         launch(args);
     }
@@ -66,11 +89,11 @@ public class Gui  extends Application{
             if (e.getEventType() == MouseEvent.MOUSE_CLICKED) {
                 x = (int)(e.getScreenX() - 560)/100;
                 y = (int)(e.getScreenY() - 170)/100;
-                System.out.println(e.getScreenX() + " " + e.getScreenY());
                 System.out.println(x + " " + y);
 
                 //reset pCOlor
                 pColor = 0;
+                playerColor = true;
 
                 //generate possible moves
                 //check list of possible moves
@@ -104,30 +127,33 @@ public class Gui  extends Application{
                 //First do player move then ai move back to back
 
                 //check if the player selected move is in possible moves
-                Move t = new Move(x, y);
+
                 for(int i = 0; i < possibleMoves.size(); i ++){
-                    if((t.x == possibleMoves.get(i).x)&&(t.y == possibleMoves.get(i).y)){
+                    if((x == possibleMoves.get(i).x)&&(y == possibleMoves.get(i).y)){
                         // make the move
                         Move selMove = new Move(x, y);
                         //update Gui Tile board
                         updateBoard(selMove, playerColor, board[x][y]);
                         //update gui cmdboard
                         guiGB.updateBoard(selMove, true);
-                        //update gui
+                        //TODO update GUI
                         updateGui();
                         //TODO do flips
 
                         break;
                     }
-                    else {
-                        System.out.println("Not an available tile");
+                    if(board[x][y].hasPiece()){
+                        System.out.println("This tile is occupied");
                     }
                 }
+
                 //clear possible moves
                 possibleMoves.clear();
 
                 //change color
                 pColor = 1;
+                playerColor = false;
+
                 //get AI possible moves
                 //generate possible moves
                 //check list of possible moves
@@ -149,7 +175,7 @@ public class Gui  extends Application{
 
                 //debugging output
                 System.out.println();
-                System.out.print("Possible Moves:");
+                System.out.print("Possible Moves for AI:");
                 for(int i = 0; i < possibleMoves.size(); i++){
                     System.out.print(possibleMoves.get(i).x + "," + (possibleMoves.get(i).y + " "));
                 }
@@ -160,8 +186,67 @@ public class Gui  extends Application{
                 }
 
                 //make AI move
+                Move selected = null;
+                int selection = -1;
+                while (selected == null) {
+                    //prioritize corners
+                    for (int i = 0; i < gweights.length; i++) {
+                        for (int j = 0; j < possibleMoves.size(); j++) {
+                            if ((gweights[i].x == possibleMoves.get(j).x) && (gweights[i].y == possibleMoves.get(j).y)) {
+                                System.out.println("My corner bitch");
+                                selected = possibleMoves.get(j);
+                            }
+                        }
+                    }
+                    //avoid spaces next to corners
+                    //generate a new arraylist - the bad moves
+                    for(int i = 0; i < possibleMoves.size(); i++){
+                        betterPossibleMoves.add(possibleMoves.get(i));
+                    }
+
+                    for (int i = 0; i < bweights.length; i++) {
+                        for (int j = 0; j < possibleMoves.size(); j++) {
+                            if (((bweights[i].x == possibleMoves.get(j).x) && (bweights[i].y == possibleMoves.get(j).y))) {
+                                betterPossibleMoves.remove(possibleMoves.get(j));
+                            }
+                        }
+                    }
+                    System.out.println();
+                    System.out.println("Better Possible Moves: ");
+                    for(int i = 0; i < betterPossibleMoves.size(); i++){
+                        System.out.print(betterPossibleMoves.get(i).x + "," + (betterPossibleMoves.get(i).y + " "));
+                    }
+                    System.out.println();
+
+                    //select from better moves at random
+                    if (betterPossibleMoves.size() > 0) {
+                        selection = new Random().nextInt(betterPossibleMoves.size());
+                        selected = betterPossibleMoves.get(selection);
+                        break;
+                    }
+                    //else just select random
+                    if (selected == null && possibleMoves.size() > 0) {
+                        selection = new Random().nextInt(possibleMoves.size());
+                        selected = possibleMoves.get(selection);
+                    }
+                    if(selected == null){
+                        System.out.println("No possible move");
+                    }
+                }
+                System.out.println(selected.x + " " + selected.y);
+                //clear betterPossibleMoves
+                betterPossibleMoves.clear();
+
+                //make move
+                Move AIMove = new Move(selected.x, selected.y);
+                //update board
+                updateBoard(AIMove, playerColor, board[x][y]);
+                //update gui
+                //TODO THIS DOESNT WORK
+                updateGui();
 
                 //make AI flips
+                guiGB.updateBoard(selected, playerColor);
 
                 //check player possible moves, if null then go again
             }
@@ -338,7 +423,6 @@ public class Gui  extends Application{
     public static boolean checkStatus(GuiPlayer p, int nullMoves) {
         return true;
     }
-
 
     public void start(Stage window) throws Exception {
 

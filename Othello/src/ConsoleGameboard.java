@@ -12,9 +12,12 @@ public class ConsoleGameboard {
     //BoardC is to look pretty
     String [] gameBoardC;
     //unicode for boardC
-    String white = "\u25CF";
-    String black = "\u25CB";
-    String empty = "\u2610";
+//    String white = "\u25CF";
+//    String black = "\u25CB";
+//    String empty = "\u2610";
+    String white = "X";
+    String black = "O";
+    String empty = " ";
 
     int pColor;
 
