@@ -7,8 +7,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ce3a0762-7ecc-4525-99fc-9c4cfa4da4b2" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/src/AI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/AI.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Gui.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Gui.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/GuiPlayer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GuiPlayer.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -59,11 +59,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Gui.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="143">
-              <caret line="156" column="45" lean-forward="true" selection-start-line="156" selection-start-column="45" selection-end-line="156" selection-end-column="45" />
+            <state relative-caret-position="393">
+              <caret line="298" lean-forward="true" selection-start-line="298" selection-end-line="298" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="e#1270#1276#0" expanded="true" />
@@ -74,39 +74,16 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Tile.java">
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/AI.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="308">
-              <caret line="23" column="9" lean-forward="true" selection-start-line="23" selection-start-column="9" selection-end-line="23" selection-end-column="9" />
+            <state relative-caret-position="88">
+              <caret line="225" column="36" lean-forward="true" selection-start-line="225" selection-start-column="36" selection-end-line="225" selection-end-column="36" />
               <folding>
-                <element signature="imports" expanded="true" />
-                <element signature="e#658#659#0" expanded="true" />
-                <element signature="e#694#695#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/GamePiece.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="526">
-              <caret line="28" column="5" selection-start-line="28" selection-start-column="5" selection-end-line="28" selection-end-column="5" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Human.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state>
-              <caret line="86" lean-forward="true" selection-start-line="86" selection-end-line="86" />
-              <folding>
-                <element signature="imports" expanded="true" />
+                <element signature="e#10536#10537#0" expanded="true" />
+                <element signature="e#10562#10563#0" expanded="true" />
+                <element signature="e#10590#10591#0" expanded="true" />
+                <element signature="e#10619#10620#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -149,11 +126,11 @@
         <option value="$PROJECT_DIR$/src/Tile.java" />
         <option value="$PROJECT_DIR$/src/Human.java" />
         <option value="$PROJECT_DIR$/src/Runner.java" />
-        <option value="$PROJECT_DIR$/src/AI.java" />
         <option value="$PROJECT_DIR$/src/ConsoleGameboard.java" />
         <option value="$PROJECT_DIR$/src/GamePiece.java" />
         <option value="$PROJECT_DIR$/src/GuiPlayer.java" />
         <option value="$PROJECT_DIR$/src/Gui.java" />
+        <option value="$PROJECT_DIR$/src/AI.java" />
       </list>
     </option>
   </component>
@@ -204,7 +181,7 @@
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1576077482365" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1576081172912" />
     <property name="last_opened_file_path" value="D:/javafx-sdk-11.0.2/lib" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
@@ -226,8 +203,8 @@
     </option>
   </component>
   <component name="RunManager">
-    <configuration name="Gui" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="Gui" />
+    <configuration name="Runner" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="Runner" />
       <module name="Othello" />
       <option name="VM_PARAMETERS" value="--module-path /javafx-sdk-11.0.2/lib --add-modules=javafx.controls" />
       <method v="2">
@@ -236,7 +213,7 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.Gui" />
+        <item itemvalue="Application.Runner" />
       </list>
     </recent_temporary>
   </component>
@@ -273,12 +250,12 @@
       <workItem from="1575880440890" duration="3284000" />
       <workItem from="1575905212645" duration="9193000" />
       <workItem from="1575968408985" duration="9351000" />
-      <workItem from="1576052009828" duration="20286000" />
+      <workItem from="1576052009828" duration="23890000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="188503000" />
+    <option name="totallyTimeSpent" value="192107000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
@@ -293,7 +270,7 @@
       <window_info id="Favorites" order="6" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.329718" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.25813448" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.32104123" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.49457702" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -401,19 +378,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/AI.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-5826">
-          <caret line="2" column="17" lean-forward="true" selection-start-line="2" selection-start-column="17" selection-end-line="2" selection-end-column="17" />
-          <folding>
-            <element signature="e#10777#10778#0" expanded="true" />
-            <element signature="e#10803#10804#0" expanded="true" />
-            <element signature="e#10831#10832#0" expanded="true" />
-            <element signature="e#10860#10861#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/ConsoleGameboard.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-1008">
@@ -486,13 +450,26 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Gui.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="143">
-          <caret line="156" column="45" lean-forward="true" selection-start-line="156" selection-start-column="45" selection-end-line="156" selection-end-column="45" />
+        <state relative-caret-position="393">
+          <caret line="298" lean-forward="true" selection-start-line="298" selection-end-line="298" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="e#1270#1276#0" expanded="true" />
             <element signature="e#10758#10759#0" expanded="true" />
             <element signature="e#10785#10786#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/AI.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="88">
+          <caret line="225" column="36" lean-forward="true" selection-start-line="225" selection-start-column="36" selection-end-line="225" selection-end-column="36" />
+          <folding>
+            <element signature="e#10536#10537#0" expanded="true" />
+            <element signature="e#10562#10563#0" expanded="true" />
+            <element signature="e#10590#10591#0" expanded="true" />
+            <element signature="e#10619#10620#0" expanded="true" />
           </folding>
         </state>
       </provider>

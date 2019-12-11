@@ -120,7 +120,6 @@ public class AI implements Player {
                     if ((gweights[i].x == possibleMoves.get(j).x) && (gweights[i].y == possibleMoves.get(j).y)) {
                         System.out.println("My corner bitch");
                         selected = possibleMoves.get(j);
-                        break;
                     }
                 }
             }
@@ -153,7 +152,7 @@ public class AI implements Player {
                 selection = new Random().nextInt(possibleMoves.size());
                 selected = possibleMoves.get(selection);
             }
-            else {
+            if(selected == null){
                 return null;
             }
         }
@@ -204,8 +203,6 @@ public class AI implements Player {
                         if(flipHelper(x + vector[i].getX(), (y + vector[i].getY()), playerColor, i)){
                             return true;
                         }
-
-
                     }
                 }
             }
@@ -234,6 +231,7 @@ public class AI implements Player {
                     return flipHelper(x + vector[direction].getX(), (y + vector[direction].getY()), playerColor, direction);
                 }
             }
+            return false;
         }
         //if board edge is reached
         return false;

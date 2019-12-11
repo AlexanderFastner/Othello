@@ -39,7 +39,7 @@ public class Gui  extends Application{
     ConsoleGameboard guiGB = new ConsoleGameboard(0);
     private boolean playerColor;
     GuiPlayer p1;
-    GuiPlayer p2;
+    AI p2;
     ArrayList<Move> possibleMoves = new ArrayList<Move>();
     ArrayList<Move> toFlip = new ArrayList<Move>();
     int pColor;
@@ -196,13 +196,10 @@ public class Gui  extends Application{
                     pieceColor = guiGB.getColor(x + vector[i].getX(), (y + vector[i].getY()));
                     //if there is a neighboring piece of a different color
                     if (pieceColor != playerColor && pieceColor != 2){
-
                         //if found continue in that dir until your piece is found
                         if(flipHelper(x + vector[i].getX(), (y + vector[i].getY()), playerColor, i)){
                             return true;
                         }
-
-
                     }
                 }
             }
@@ -300,7 +297,6 @@ public class Gui  extends Application{
         }
     }
 
-
     private Parent makeBoard(){
         Pane root = new Pane();
         root.setPrefSize(width * tileSize, height * tileSize);
@@ -334,7 +330,6 @@ public class Gui  extends Application{
                     tile.setPiece(piece);
                     piecesG.getChildren().add(piece);
                 }
-
             }
         }
         return root;
@@ -384,7 +379,7 @@ public class Gui  extends Application{
 
         //gui game
          p1 = new GuiPlayer();
-         p2 = new GuiPlayer();
+         p2 = new AI();
 
         int Rounds = 6;
         Random rnd = new Random();
@@ -395,5 +390,4 @@ public class Gui  extends Application{
             p2.init(1, 8, rnd);
         }
     }
-
 }
