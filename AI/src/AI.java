@@ -132,6 +132,7 @@ public class AI implements Player {
 
         Move selected = null;
         int selection = -1;
+        boolean noCorner = true;
         while (selected == null) {
             //prioritize corners
             for (int i = 0; i < gweights.length; i++) {
@@ -139,62 +140,65 @@ public class AI implements Player {
                     if ((gweights[i].x == possibleMoves.get(j).x) && (gweights[i].y == possibleMoves.get(j).y)) {
                         System.out.println("My corner bitch");
                         selected = possibleMoves.get(j);
+                        noCorner = false;
                     }
                 }
             }
-            //try to get on edges while not next to corner
-            for (int i = 0; i < eweights.length; i++) {
-                for (int j = 0; j < possibleMoves.size(); j++) {
-                    if (((eweights[i].x == possibleMoves.get(j).x) && (eweights[i].y == possibleMoves.get(j).y))) {
-                        edgePossibleMoves.add(possibleMoves.get(j));
+            if (noCorner) {
+                //try to get on edges while not next to corner
+                for (int i = 0; i < eweights.length; i++) {
+                    for (int j = 0; j < possibleMoves.size(); j++) {
+                        if (((eweights[i].x == possibleMoves.get(j).x) && (eweights[i].y == possibleMoves.get(j).y))) {
+                            edgePossibleMoves.add(possibleMoves.get(j));
+                        }
                     }
                 }
-            }
-            System.out.print("Possible Edge Moves: ");
-            for(int i = 0; i < edgePossibleMoves.size(); i++){
-                System.out.print(edgePossibleMoves.get(i).x + "," + (edgePossibleMoves.get(i).y + " "));
-            }
+                System.out.print("Possible Edge Moves: ");
+                for (int i = 0; i < edgePossibleMoves.size(); i++) {
+                    System.out.print(edgePossibleMoves.get(i).x + "," + (edgePossibleMoves.get(i).y + " "));
+                }
 
-            //select from edge moves at random
-            if (edgePossibleMoves.size() > 0) {
-                selection = new Random().nextInt(edgePossibleMoves.size());
-                selected = edgePossibleMoves.get(selection);
-                break;
-            }
+                //select from edge moves at random
+                if (edgePossibleMoves.size() > 0) {
+                    selection = new Random().nextInt(edgePossibleMoves.size());
+                    selected = edgePossibleMoves.get(selection);
+                    break;
+                }
 
-            //avoid spaces next to corners
-            //generate a new arraylist - the bad moves
-            for(int i = 0; i < possibleMoves.size(); i++){
-                betterPossibleMoves.add(possibleMoves.get(i));
-            }
+                //avoid spaces next to corners
+                //generate a new arraylist - the bad moves
+                for (int i = 0; i < possibleMoves.size(); i++) {
+                    betterPossibleMoves.add(possibleMoves.get(i));
+                }
 
-            for (int i = 0; i < bweights.length; i++) {
-                for (int j = 0; j < possibleMoves.size(); j++) {
-                    if (((bweights[i].x == possibleMoves.get(j).x) && (bweights[i].y == possibleMoves.get(j).y))) {
-                        betterPossibleMoves.remove(possibleMoves.get(j));
+                for (int i = 0; i < bweights.length; i++) {
+                    for (int j = 0; j < possibleMoves.size(); j++) {
+                        if (((bweights[i].x == possibleMoves.get(j).x) && (bweights[i].y == possibleMoves.get(j).y))) {
+                            betterPossibleMoves.remove(possibleMoves.get(j));
+                        }
                     }
                 }
-            }
-            System.out.print("Better Possible Moves: ");
-            for(int i = 0; i < betterPossibleMoves.size(); i++){
-                System.out.print(betterPossibleMoves.get(i).x + "," + (betterPossibleMoves.get(i).y + " "));
-            }
-            System.out.println();
+                System.out.print("Better Possible Moves: ");
+                for (int i = 0; i < betterPossibleMoves.size(); i++) {
+                    System.out.print(betterPossibleMoves.get(i).x + "," + (betterPossibleMoves.get(i).y + " "));
+                }
+                System.out.println();
 
 
-            //select from better moves at random
-            if (betterPossibleMoves.size() > 0) {
-                selection = new Random().nextInt(betterPossibleMoves.size());
-                selected = betterPossibleMoves.get(selection);
-                break;
-            }
-            //else just select random
-            if (selected == null && possibleMoves.size() > 0) {
-                selection = new Random().nextInt(possibleMoves.size());
-                selected = possibleMoves.get(selection);
-            }
-            if(selected == null){
-                return null;
+                //select from better moves at random
+                if (betterPossibleMoves.size() > 0) {
+                    selection = new Random().nextInt(betterPossibleMoves.size());
+                    selected = betterPossibleMoves.get(selection);
+                    break;
+                }
+                //else just select random
+                if (selected == null && possibleMoves.size() > 0) {
+                    selection = new Random().nextInt(possibleMoves.size());
+                    selected = possibleMoves.get(selection);
+                }
+                if (selected == null) {
+                    return null;
+                }
             }
         }
 
@@ -257,7 +261,7 @@ public class AI implements Player {
         int pieceColor;
         //check bounds
         if ((x + vector[direction].getX() >= 0) && (y + vector[direction].getY() >= 0)) {
-            if ((x + vector[direction].getX()) + (8 * (y + vector[direction].getY())) < 64){
+            if ((x + vector[direction].getX() < 8) && ((y + vector[direction].getY()) < 8)){
                 //if at least 1 opposing piece is between the possible placement and another of the same players pieces a flip is possible
                 pieceColor = cgb.getColor(x + vector[direction].getX(), (y + vector[direction].getY()));
                 //if another piece of player color is found exit with true
