@@ -1,19 +1,18 @@
-import java.util.*;
-import szte.mi.*;
+import com.sun.prism.shader.Solid_TextureYV12_AlphaTest_Loader;
+import szte.mi.Move;
+import szte.mi.Player;
+
+import java.util.ArrayList;
+import java.util.Random;
 import java.util.Scanner;
 
-public class Human implements Player {
+public class GuiPlayer implements Player {
 
     ConsoleGameboard cgb;
-    //color of this Human
-    int pColor;
-    int intoColor;
-    boolean oColor;
-    boolean color;
-
-    ArrayList<Move> toFlip = new ArrayList<Move>();
-
     ArrayList<Move> possibleMoves = new ArrayList<Move>();
+    int pColor;
+    ArrayList<Move> toFlip = new ArrayList<Move>();
+    private boolean playerColor;
 
     //create dir vectors
     Pair TOPLEFT = new Pair(-1, -1);
@@ -26,43 +25,25 @@ public class Human implements Player {
     Pair BOTTOMRIGHT = new Pair(1, 1);
     Pair [] vector = {TOPLEFT, TOPCENTER, TOPRIGHT, CENTERLEFT, CENTERRIGHT, BOTTOMLEFT, BOTTOMCENTER, BOTTOMRIGHT};
 
-    //each player has their own board
-    //communicate only through moves
-    public Human() {
-        cgb = new ConsoleGameboard(pColor);
+
+    public GuiPlayer(){
+        cgb = new ConsoleGameboard(0);
     }
 
     @Override
     public void init(int order, long t, Random rnd) {
-        pColor = order;
-        if(pColor == 0){
-            intoColor = 1;
-            oColor = false;
-            color = true;
+        if (order ==0){
+            playerColor = true;
         }
         else {
-            intoColor = 0;
-            oColor = true;
-            color = false;
+            playerColor = false;
         }
     }
 
     @Override
     public Move nextMove(Move prevMove, long tOpponent, long t) {
-        //update the board with prevMove
-        cgb.updateBoard(prevMove, oColor);
 
-        //call reverseflip in all 8 dir for the opponents move
-        if (prevMove != null) {
-            for (int i = 0; i < vector.length; i++) {
-                reverseFlip(prevMove.x, prevMove.y, intoColor,i);
-            }
-        }
-
-        //output board
-        cgb.printBoard();
-
-        //making array of valid moves for the current game State
+        //check list of possible moves
         Move temp;
         int curY =0;
         for(int i = 0; i < 64; i++){
@@ -78,66 +59,22 @@ public class Human implements Player {
                 }
             }
         }
-        //debugging
         System.out.print("Possible Moves:");
         for(int i = 0; i < possibleMoves.size(); i++){
             System.out.print(possibleMoves.get(i).x + "," + (possibleMoves.get(i).y + " "));
         }
         System.out.println();
-
-        //check input
-        //check if posMove would be in an array of possible moves else error
-
-        if(possibleMoves.size() == 0){
-            System.out.println("There are no possible moves for you");
-            return null;
-        }
-        Move posMove = moveInputs();
-        boolean ValidMove = false;
-        while(!ValidMove) {
-            for (int i = 0; i < possibleMoves.size(); i++) {
-                if ((possibleMoves.get(i).x == posMove.x) && (possibleMoves.get(i).y == posMove.y)) {
-                    System.out.println("This is a valid move");
-                    ValidMove = true;
-                }
-            }
-            if(!ValidMove) {
-                System.out.println("This is not a valid move. Please select another");
-                posMove = moveInputs();
-            }
-        }
-
-
-        //update board with this players move
-        cgb.updateBoard(posMove, color);
-        for (int i = 0; i < vector.length; i++){
-            reverseFlip(posMove.x, posMove.y, pColor,i);
-        }
-
-        possibleMoves.clear();
-        return posMove;
-    }
-
-    public Move moveInputs(){
-        //inputs
+        //detect a click for a move
         Scanner sc = new Scanner(System.in);
-        System.out.println("Please enter your move");
         int x = sc.nextInt();
         int y = sc.nextInt();
-        while(x < 0|| x > 7) {
-            System.out.println("Please enter a valid input 0-7");
-            x = sc.nextInt();
-        }
-        while(y < 0|| y > 7) {
-            System.out.println("Please enter a valid input 0-7");
-            y = sc.nextInt();
-        }
 
         Move m = new Move(x, y);
+
         return m;
     }
 
-    //check if a move is Valid
+
     public boolean checkValidMove(Move move, int pColor) {
         int x = move.x;
         int y = move.y;
@@ -147,7 +84,6 @@ public class Human implements Player {
         }
         return false;
     }
-
     //checks if you can get a flip on this xy
     public boolean possibleFlip(int x, int y, int playerColor){
         int pieceColor = 2;
@@ -161,13 +97,10 @@ public class Human implements Player {
                     pieceColor = cgb.getColor(x + vector[i].getX(), (y + vector[i].getY()));
                     //if there is a neighboring piece of a different color
                     if (pieceColor != playerColor && pieceColor != 2){
-
                         //if found continue in that dir until your piece is found
                         if(flipHelper(x + vector[i].getX(), (y + vector[i].getY()), playerColor, i)){
                             return true;
                         }
-
-
                     }
                 }
             }
@@ -180,7 +113,7 @@ public class Human implements Player {
         int pieceColor;
         //check bounds
         if ((x + vector[direction].getX() >= 0) && (y + vector[direction].getY() >= 0)) {
-            if ((x + vector[direction].getX() <= 7) && ((y + vector[direction].getY()) <= 7)){
+            if ((x + vector[direction].getX()) + (8 * (y + vector[direction].getY())) < 64){
                 //if at least 1 opposing piece is between the possible placement and another of the same players pieces a flip is possible
                 pieceColor = cgb.getColor(x + vector[direction].getX(), (y + vector[direction].getY()));
                 //if another piece of player color is found exit with true
@@ -193,7 +126,7 @@ public class Human implements Player {
                 }
                 //if another piece of opposing player color is found go again
                 else {
-                    return flipHelper(x + vector[direction].getX(), (y + vector[direction].getY()), playerColor, direction);
+                    flipHelper(x + vector[direction].getX(), (y + vector[direction].getY()), playerColor, direction);
                 }
             }
         }
@@ -201,15 +134,12 @@ public class Human implements Player {
         return false;
     }
 
-    //if a move is selected there is a flip
-    //call flipHelper in all 8 dir until all same color pieces are found
-    //if the same players piece is found is found go in opposite of direction and flip every piece on the way
     public void reverseFlip(int x, int y, int playerColor, int direction){
         Move toFliptemp;
         int pieceColor;
 
         if ((x + vector[direction].getX() >= 0) && (y + vector[direction].getY() >= 0)) {
-            if ((x + vector[direction].getX() <= 7) && ((y + vector[direction].getY()) <= 7)){
+            if ((x + vector[direction].getX()) + (8 * (y + vector[direction].getY())) < 64) {
                 //now keep checking in the same dir
                 pieceColor = cgb.getColor(x + vector[direction].getX(), (y + vector[direction].getY()));
                 //if another enemy piece is found do again
@@ -232,25 +162,15 @@ public class Human implements Player {
                     toFlip.clear();
                 }
             }
-            //if it runs into an edge its not a possible flip
-            else {
-                toFlip.clear();
-            }
         }
-        //if it runs into an edge its not a possible flip
-        else {
-            toFlip.clear();
-        }
-
     }
 
-    //getters
-    public ConsoleGameboard getBoard() {
-        return cgb;
+    public boolean getPlayerColor(){
+        return playerColor;
     }
 
-    public int getpColor(){
-        return pColor;
-    }
+
+
+
 
 }

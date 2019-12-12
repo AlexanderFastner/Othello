@@ -4,19 +4,22 @@
     <list default="true" id="aef819c5-cd44-4c10-9042-eb5b55503422" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/AI/AI.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/AI/AI.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/AI/ConsoleGameboard.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/AI/ConsoleGameboard.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/AI.class" beforeDir="false" afterPath="$PROJECT_DIR$/src/AI.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/AI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/AI.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ConsoleGameboard.class" beforeDir="false" afterPath="$PROJECT_DIR$/src/ConsoleGameboard.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ConsoleGameboard.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ConsoleGameboard.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../Othello/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../Othello/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Othello/out/production/Othello/GamePiece.class" beforeDir="false" afterPath="$PROJECT_DIR$/../Othello/out/production/Othello/GamePiece.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Othello/out/production/Othello/Gui$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/../Othello/out/production/Othello/Gui$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Othello/out/production/Othello/AI.class" beforeDir="false" afterPath="$PROJECT_DIR$/../Othello/out/production/Othello/AI.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Othello/out/production/Othello/ConsoleGameboard.class" beforeDir="false" afterPath="$PROJECT_DIR$/../Othello/out/production/Othello/ConsoleGameboard.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../Othello/out/production/Othello/Gui.class" beforeDir="false" afterPath="$PROJECT_DIR$/../Othello/out/production/Othello/Gui.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Othello/out/production/Othello/Tile.class" beforeDir="false" afterPath="$PROJECT_DIR$/../Othello/out/production/Othello/Tile.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Othello/src/GamePiece.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Othello/src/GamePiece.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Othello/src/AI.class" beforeDir="false" afterPath="$PROJECT_DIR$/../Othello/src/AI.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Othello/src/AI.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Othello/src/AI.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Othello/src/ConsoleGameboard.class" beforeDir="false" afterPath="$PROJECT_DIR$/../Othello/src/ConsoleGameboard.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Othello/src/ConsoleGameboard.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Othello/src/ConsoleGameboard.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Othello/src/GamePiece.class" beforeDir="false" afterPath="$PROJECT_DIR$/../Othello/src/GamePiece.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Othello/src/Gui$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/../Othello/src/Gui$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Othello/src/Gui.class" beforeDir="false" afterPath="$PROJECT_DIR$/../Othello/src/Gui.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../Othello/src/Gui.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Othello/src/Gui.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Othello/src/Tile.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Othello/src/Tile.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Othello/src/Human.class" beforeDir="false" afterPath="$PROJECT_DIR$/../Othello/src/Human.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Othello/src/Human.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Othello/src/Human.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Othello/src/Tile.class" beforeDir="false" afterPath="$PROJECT_DIR$/../Othello/src/Tile.class" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -30,8 +33,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/AI.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="310">
-              <caret line="299" column="47" lean-forward="true" selection-start-line="299" selection-start-column="47" selection-end-line="299" selection-end-column="47" />
+            <state relative-caret-position="-182">
+              <caret line="270" column="94" lean-forward="true" selection-start-line="270" selection-start-column="12" selection-end-line="270" selection-end-column="94" />
             </state>
           </provider>
         </entry>
@@ -39,8 +42,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/ConsoleGameboard.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="550">
-              <caret line="104" column="17" lean-forward="true" selection-start-line="104" selection-start-column="17" selection-end-line="104" selection-end-column="17" />
+            <state relative-caret-position="2222">
+              <caret line="104" column="17" selection-start-line="104" selection-start-column="17" selection-end-line="104" selection-end-column="17" />
             </state>
           </provider>
         </entry>
@@ -76,6 +79,8 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
+      <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -92,8 +97,6 @@
           <select />
         </subPane>
       </pane>
-      <pane id="PackagesPane" />
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -130,18 +133,19 @@
       <updated>1576144788078</updated>
       <workItem from="1576144789745" duration="4568000" />
       <workItem from="1576151639471" duration="67000" />
-      <workItem from="1576151718240" duration="3024000" />
+      <workItem from="1576151718240" duration="4228000" />
+      <workItem from="1576158168197" duration="554000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="7659000" />
+    <option name="totallyTimeSpent" value="9417000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.2553305" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.25799572" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Image Layers" order="2" />
       <window_info id="Designer" order="3" />
@@ -179,17 +183,17 @@
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/src/Runner.java" />
-    <entry file="file://$PROJECT_DIR$/src/ConsoleGameboard.java">
+    <entry file="file://$PROJECT_DIR$/src/AI.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="550">
-          <caret line="104" column="17" lean-forward="true" selection-start-line="104" selection-start-column="17" selection-end-line="104" selection-end-column="17" />
+        <state relative-caret-position="-182">
+          <caret line="270" column="94" lean-forward="true" selection-start-line="270" selection-start-column="12" selection-end-line="270" selection-end-column="94" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/AI.java">
+    <entry file="file://$PROJECT_DIR$/src/ConsoleGameboard.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="310">
-          <caret line="299" column="47" lean-forward="true" selection-start-line="299" selection-start-column="47" selection-end-line="299" selection-end-column="47" />
+        <state relative-caret-position="2222">
+          <caret line="104" column="17" selection-start-line="104" selection-start-column="17" selection-end-line="104" selection-end-column="17" />
         </state>
       </provider>
     </entry>

@@ -84,6 +84,8 @@ public class AI implements Player {
             oColor = true;
             color = false;
         }
+        cgb = new ConsoleGameboard(1);
+
     }
 
     @Override

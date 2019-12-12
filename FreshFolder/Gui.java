@@ -154,11 +154,9 @@ public class Gui  extends Application{
                         Move selMove = new Move(x, y);
                         //update gui cmdboard
                         guiGB.updateBoard(selMove, true);
+                        //TODO update GUI
                         updateGui();
                         //TODO do flips
-                        
-
-
 
                         break;
                     }
@@ -307,6 +305,8 @@ public class Gui  extends Application{
         }
     };
 
+
+
     public boolean checkValidMove(Move move, int pColor) {
         int x = move.x;
         int y = move.y;
@@ -435,6 +435,8 @@ public class Gui  extends Application{
                 }
             }
         }
+
+
     }
 
     private Parent makeBoard(){
