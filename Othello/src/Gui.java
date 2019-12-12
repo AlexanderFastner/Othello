@@ -406,8 +406,17 @@ public class Gui  extends Application{
                 System.out.println("White: " + Whitecount);
                 System.out.println("Black: " + Blackcount);
                 System.out.println("Empty: " + Empty);
-            }
+                if(Whitecount > Blackcount){
+                    System.out.println("Winner is White");
+                }
+                if(Whitecount < Blackcount){
+                    System.out.println("Winner is Black");
+                }
+                else {
+                    System.out.println("Tie");
 
+                }
+            }
             else {
                 System.out.println(e.getEventType());
             }
@@ -657,17 +666,15 @@ public class Gui  extends Application{
         p.setCenter(board);
         p.setMargin(board, new Insets(100));
         //right
-        Button reset = new Button("RESET");
-        reset.addEventHandler(ActionEvent.ACTION, resetButton);
-        reset.setFont(new Font("Arial", 30));
-        p.setRight(reset);
+//        Button reset = new Button("RESET");
+//        reset.addEventHandler(ActionEvent.ACTION, resetButton);
+//        reset.setFont(new Font("Arial", 30));
+//        p.setRight(reset);
 
         //bottom
-        //TODO THIS ISNT WORKING
-
-        Label PosMoves = new Label("Possible Moves: " + s);
-        PosMoves.setFont(new Font("Arial", 30));
-        p.setBottom(PosMoves);
+//        Label PosMoves = new Label("Possible Moves: " + s);
+//        PosMoves.setFont(new Font("Arial", 30));
+//        p.setBottom(PosMoves);
 
         Scene screen = new Scene(p);
         window.setResizable(false);
