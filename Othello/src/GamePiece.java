@@ -39,7 +39,7 @@ public class GamePiece extends StackPane {
     }
 
     public int getPieceColor(){
-        if(pieceColor ==0) {
+        if(pieceColor == 0 || pieceColor == 1) {
             return pieceColor;
         }
         return -1;

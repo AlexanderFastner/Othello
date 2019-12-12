@@ -44,6 +44,7 @@ public class Gui  extends Application{
     ArrayList<Move> betterPossibleMoves = new ArrayList<>();
     ArrayList<Move> toFlip = new ArrayList<Move>();
     ArrayList<Move> edgePossibleMoves = new ArrayList<>();
+    boolean playerValidMove = true;
 
     int pColor;
 
@@ -138,6 +139,7 @@ public class Gui  extends Application{
                 for (int i = 0; i < possibleMoves.size(); i++) {
                     System.out.print(possibleMoves.get(i).x + "," + (possibleMoves.get(i).y + " "));
                 }
+                System.out.println();
 
                 //if no possible moves say so
                 if (possibleMoves.size() == 0) {
@@ -150,32 +152,38 @@ public class Gui  extends Application{
 
                 for (int i = 0; i < possibleMoves.size(); i++) {
                     if ((x == possibleMoves.get(i).x) && (y == possibleMoves.get(i).y)) {
+                        playerValidMove = true;
                         // make the move
                         Move selMove = new Move(x, y);
                         //update gui cmdboard
                         guiGB.updateBoard(selMove, true);
+                        //update cmdboard with flips
+                        for (int j = 0; i < vector.length; i++){
+                            reverseFlip(selMove.x, selMove.y, pColor,i);
+                        }
+                        guiGB.printBoard();
+
+                        //update gui
                         updateGui();
-                        //TODO do flips
-                        
-
-
 
                         break;
                     }
-                    if (board[x][y].hasPiece()) {
-                        System.out.println("This tile is occupied");
+                    else {
+                        playerValidMove = false;
                     }
                 }
-
+                //dont allow non valid moves
+                if(!playerValidMove){
+                    System.out.println("Not a valid move");
+                    return;
+                }
                 //clear possible moves
                 possibleMoves.clear();
-
                 //change color
                 pColor = 1;
                 playerColor = false;
 
-                //get AI possible moves
-                //generate possible moves
+                //generate possible AI moves
                 //check list of possible moves
                 Move AItemp;
                 int AIcurY = 0;
@@ -199,6 +207,7 @@ public class Gui  extends Application{
                 for (int i = 0; i < possibleMoves.size(); i++) {
                     System.out.print(possibleMoves.get(i).x + "," + (possibleMoves.get(i).y + " "));
                 }
+                System.out.println();
 
                 //if no possible moves say so
                 boolean AInoMoves = false;
@@ -231,7 +240,7 @@ public class Gui  extends Application{
                                 }
                             }
                         }
-                        System.out.print("Possible Edge Moves: ");
+                        System.out.println("Possible Edge Moves: ");
                         for (int i = 0; i < edgePossibleMoves.size(); i++) {
                             System.out.print(edgePossibleMoves.get(i).x + "," + (edgePossibleMoves.get(i).y + " "));
                         }
@@ -258,7 +267,7 @@ public class Gui  extends Application{
                                 }
                             }
                         }
-                        System.out.print("Better Possible Moves: ");
+                        System.out.println("Better Possible Moves: ");
                         for (int i = 0; i < betterPossibleMoves.size(); i++) {
                             System.out.print(betterPossibleMoves.get(i).x + "," + (betterPossibleMoves.get(i).y + " "));
                         }
@@ -292,13 +301,12 @@ public class Gui  extends Application{
                     System.out.println(selected.x + " " + selected.y);
                     //make move
                     Move AIMove = new Move(selected.x, selected.y);
-                    //update gui
-                    //TODO THIS DOESNT WORK
-                    updateGui();
-
                     //make AI flips
                     guiGB.updateBoard(selected, playerColor);
+                    //update gui
+                    updateGui();
                     //check player possible moves, if null then go again
+
                 }
             }
             else {
@@ -429,8 +437,12 @@ public class Gui  extends Application{
 
                 //if a flip happened, update
                 if(board[i][j].getPiece() != null) {
+                    System.out.println("X and Y: " + i + " " + j + " " + board[i][j].getPiece().getPieceColor() + " " + guiGB.getColor(i, j));
                     if (board[i][j].getPiece().getPieceColor() != guiGB.getColor(i, j)) {
+                        piecesG.getChildren().remove(board[i][j].getPiece());
                         board[i][j].getPiece().setPieceColor(guiGB.getColor(i, j));
+                        System.out.println(board[i][j].getPiece().getPieceColor());
+                        piecesG.getChildren().add(board[i][j].getPiece());
                     }
                 }
             }
