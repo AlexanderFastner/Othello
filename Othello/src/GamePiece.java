@@ -5,6 +5,8 @@ import javafx.scene.shape.Ellipse;
 
 public class GamePiece extends StackPane {
 
+    private int pieceColor;
+
     public GamePiece(boolean color, int x, int y){
 
         //make a circle
@@ -16,15 +18,34 @@ public class GamePiece extends StackPane {
 
         //color
         if(color){
+            pieceColor = 0;
+        }
+
+        else {
+            pieceColor = 1;
+        }
+        if(pieceColor == 0){
             c.setFill(Color.BLACK);
             c.setStrokeWidth(3);
             c.setStroke(Color.WHITE);
         }
-        else {
+        if(pieceColor == 1){
             c.setFill(Color.WHITE);
             c.setStrokeWidth(3);
             c.setStroke(Color.BLACK);
         }
+
         getChildren().add(c);
     }
+
+    public int getPieceColor(){
+        if(pieceColor ==0) {
+            return pieceColor;
+        }
+        return -1;
+    }
+    public void setPieceColor(int pC){
+        pieceColor = pC;
+    }
+
 }

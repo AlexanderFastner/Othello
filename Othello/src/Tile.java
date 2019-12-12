@@ -30,7 +30,10 @@ public class Tile extends Rectangle {
     }
 
     public GamePiece getPiece(){
-        return piece;
+        if(this.hasPiece()) {
+            return piece;
+        }
+        return null;
     }
 
     public void setPiece(GamePiece piece){
