@@ -46,9 +46,13 @@ public class Gui  extends Application{
     ArrayList<Move> toFlip = new ArrayList<Move>();
     ArrayList<Move> edgePossibleMoves = new ArrayList<>();
     boolean playerValidMove = true;
-
+    int nullMoves = 0;
     int pColor;
     String s = "";
+    boolean gameRunning = true;
+    int Blackcount =0;
+    int Whitecount =0;
+    int Empty =0;
 
 
     //create dir vectors
@@ -112,8 +116,14 @@ public class Gui  extends Application{
             Random rnd = new Random();
             p1.init(0, 8, rnd);
             p2.init(1, 8, rnd);
-//            board = new Tile[width][height];
-//            updateGui();
+            p1.cgb.printBoard();
+            possibleMoves.clear();
+            betterPossibleMoves.clear();
+            edgePossibleMoves.clear();
+            toFlip.clear();
+            tileGrid.getChildren().clear();
+            piecesG.getChildren().clear();
+            resetBoard();
         }
 
     };
@@ -149,11 +159,7 @@ public class Gui  extends Application{
                         }
                     }
                 }
-                //update label
-                s = " ";
-                for(int i = 0; i < possibleMoves.size(); i++){
-                    s += (possibleMoves.get(i).x + "," + (possibleMoves.get(i).y + " "));
-                }
+
 
                 //debugging output
                 System.out.print("Possible Moves:");
@@ -165,6 +171,7 @@ public class Gui  extends Application{
                 //if no possible moves say so
                 if (possibleMoves.size() == 0) {
                     System.out.println("There are no possible moves for you");
+                    nullMoves ++;
                 }
 
                 //First do player move then ai move back to back
@@ -174,6 +181,7 @@ public class Gui  extends Application{
                 for (int i = 0; i < possibleMoves.size(); i++) {
                     if ((x == possibleMoves.get(i).x) && (y == possibleMoves.get(i).y)) {
                         playerValidMove = true;
+                        nullMoves = 0;
                         // make the move
                         Move selMove = new Move(x, y);
                         //update gui cmdboard
@@ -221,6 +229,8 @@ public class Gui  extends Application{
                     }
                 }
 
+                gameRunning = checkStatus(nullMoves);
+
                 //debugging output
                 System.out.println();
                 System.out.print("Possible Moves for AI:");
@@ -232,9 +242,12 @@ public class Gui  extends Application{
                 //if no possible moves say so
                 boolean AInoMoves = false;
                 if (possibleMoves.size() == 0) {
-                    System.out.println("There are no possible moves for player 2");
+                    System.out.println("There are no possible moves for the AI");
                     AInoMoves = true;
+                    nullMoves ++;
                 }
+
+                gameRunning = checkStatus(nullMoves);
 
                 //make AI move
                 Move selected = null;
@@ -312,7 +325,9 @@ public class Gui  extends Application{
                 }
 
                 //clear betterPossibleMoves
+                possibleMoves.clear();
                 betterPossibleMoves.clear();
+                edgePossibleMoves.clear();
                 if (AInoMoves) {
                     System.out.println("AI passes");
 
@@ -361,18 +376,61 @@ public class Gui  extends Application{
                         System.out.print(possibleMoves.get(i).x + "," + (possibleMoves.get(i).y + " "));
                     }
                     System.out.println();
+                    //update label
+                    s = " ";
+                    for(int i = 0; i < possibleMoves.size(); i++){
+                        s += (possibleMoves.get(i).x + "," + (possibleMoves.get(i).y + " "));
+                    }
+
                     possibleMoves.clear();
-
-
                 }
 
             }
+
+            if(!gameRunning){
+                System.out.println("Game over");
+                //count pieces
+                for (int i = 0; i < 7; i++){
+                    for (int j = 0; j < 7; j++){
+                        if (guiGB.getColor(i,j) == 0) {
+                            Blackcount++;
+                        }
+                        if (guiGB.getColor(i,j) == 0) {
+                            Whitecount++;
+                        }
+                        else {
+                            Empty++;
+                        }
+                    }
+                }
+                System.out.println("White: " + Whitecount);
+                System.out.println("Black: " + Blackcount);
+                System.out.println("Empty: " + Empty);
+            }
+
             else {
                 System.out.println(e.getEventType());
             }
         }
     };
 
+    //check status
+    //Is the game still running
+    public boolean checkStatus(int nullMoves) {
+
+        if(guiGB.isFull()){
+            return false;
+        }
+
+        //both players last moves are null
+        if(nullMoves == 2){
+            System.out.println("There are no more possible moves for either player");
+            return false;
+        }
+        return true;
+    }
+
+    //check if a move is Valid
     public boolean checkValidMove(Move move, int pColor) {
         int x = move.x;
         int y = move.y;
@@ -395,9 +453,10 @@ public class Gui  extends Application{
                     //color of the piece in the dir of vector is pieceColor
                     pieceColor = guiGB.getColor(x + vector[i].getX(), (y + vector[i].getY()));
                     //if there is a neighboring piece of a different color
-                    if (pieceColor != playerColor && pieceColor != 2){
+                    if ((pieceColor != playerColor) && (pieceColor != 2)){
+
                         //if found continue in that dir until your piece is found
-                        if(flipHelper(x + vector[i].getX(), (y + vector[i].getY()), playerColor, i)){
+                        if(flipHelper(x, y, playerColor, i)){
                             return true;
                         }
                     }
@@ -412,7 +471,7 @@ public class Gui  extends Application{
         int pieceColor;
         //check bounds
         if ((x + vector[direction].getX() >= 0) && (y + vector[direction].getY() >= 0)) {
-            if ((x + vector[direction].getX()) + (8 * (y + vector[direction].getY())) < 64){
+            if ((x + vector[direction].getX() <= 7) && ((y + vector[direction].getY()) <= 7)){
                 //if at least 1 opposing piece is between the possible placement and another of the same players pieces a flip is possible
                 pieceColor = guiGB.getColor(x + vector[direction].getX(), (y + vector[direction].getY()));
                 //if another piece of player color is found exit with true
@@ -425,9 +484,10 @@ public class Gui  extends Application{
                 }
                 //if another piece of opposing player color is found go again
                 else {
-                    flipHelper(x + vector[direction].getX(), (y + vector[direction].getY()), playerColor, direction);
+                    return flipHelper(x + vector[direction].getX(), (y + vector[direction].getY()), playerColor, direction);
                 }
             }
+            return false;
         }
         //if board edge is reached
         return false;
@@ -461,7 +521,10 @@ public class Gui  extends Application{
                     toFlip.clear();
                 }
             }
+            toFlip.clear();
+
         }
+        toFlip.clear();
     }
 
     public GamePiece makePiece(boolean color, int x, int y, Tile t){
@@ -472,6 +535,41 @@ public class Gui  extends Application{
         p.addEventHandler(MouseEvent.MOUSE_CLICKED, eventHandler);
         return p;
     }
+
+    public void resetBoard(){
+        piecesG.getChildren().clear();
+        for(int x = 0; x < width; x++) {
+            for (int y = 0; y < height; y++) {
+                //make new tiles, even tiles are white
+                Tile tile = new Tile(((x + y) % 2 == 0), x, y);
+                board[x][y] = tile;
+                board[x][y].setPiece(null);
+                //event handler
+                tile.addEventHandler(MouseEvent.MOUSE_CLICKED, eventHandler);
+                tileGrid.getChildren().add(tile);
+
+                GamePiece piece = null;
+                //add starting pieces
+                if (x == 3 && y == 3) {
+                    piece = makePiece(false, 3, 3, tile);
+                }
+                if (x == 4 && y == 4) {
+                    piece = makePiece(false, 4, 4, tile);
+                }
+                if (x == 3 && y == 4) {
+                    piece = makePiece(true, 3, 4, tile);
+                }
+                if (x == 4 && y == 3) {
+                    piece = makePiece(true, 4, 3, tile);
+                }
+                if (piece != null) {
+                    tile.setPiece(piece);
+                    piecesG.getChildren().add(piece);
+                }
+            }
+        }
+    }
+
 
     public void updateGui(){
 
@@ -541,10 +639,6 @@ public class Gui  extends Application{
             }
         }
         return root;
-    }
-
-    public static boolean checkStatus(GuiPlayer p, int nullMoves) {
-        return true;
     }
 
     public void start(Stage window) throws Exception {

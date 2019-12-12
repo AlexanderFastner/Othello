@@ -116,12 +116,12 @@ public class ConsoleGameboard {
     //checks if board is full
     public boolean isFull(){
         int counter = 0;
-        for(int i = 0; i < 64; i++) {
+        for(int i = 0; i < 63; i++) {
             if (gameBoardT[i]){
                 counter++;
             }
         }
-        if(counter == 64){
+        if(counter == 63){
             return true;
         }
         else {

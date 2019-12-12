@@ -99,7 +99,7 @@ public class GuiPlayer implements Player {
                     //if there is a neighboring piece of a different color
                     if (pieceColor != playerColor && pieceColor != 2){
                         //if found continue in that dir until your piece is found
-                        if(flipHelper(x + vector[i].getX(), (y + vector[i].getY()), playerColor, i)){
+                        if(flipHelper(x , y , playerColor, i)){
                             return true;
                         }
                     }

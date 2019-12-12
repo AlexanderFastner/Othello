@@ -1,5 +1,6 @@
 import javafx.application.Application;
 import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -44,8 +45,10 @@ public class Gui  extends Application{
     ArrayList<Move> betterPossibleMoves = new ArrayList<>();
     ArrayList<Move> toFlip = new ArrayList<Move>();
     ArrayList<Move> edgePossibleMoves = new ArrayList<>();
+    boolean playerValidMove = true;
 
     int pColor;
+    String s = "";
 
 
     //create dir vectors
@@ -103,6 +106,27 @@ public class Gui  extends Application{
         launch(args);
     }
 
+    EventHandler<ActionEvent> resetButton = new EventHandler<ActionEvent>(){
+        @Override
+        public void handle(ActionEvent actionEvent) {
+            Random rnd = new Random();
+            p1.init(0, 8, rnd);
+            p2.init(1, 8, rnd);
+            p1.cgb.printBoard();
+            possibleMoves.clear();
+            betterPossibleMoves.clear();
+            edgePossibleMoves.clear();
+            toFlip.clear();
+            tileGrid.getChildren().clear();
+            piecesG.getChildren().clear();
+            resetBoard();
+
+        }
+
+    };
+
+
+
     EventHandler<MouseEvent> eventHandler = new EventHandler<MouseEvent>() {
         @Override
         public void handle(MouseEvent e) {
@@ -133,11 +157,13 @@ public class Gui  extends Application{
                     }
                 }
 
+
                 //debugging output
                 System.out.print("Possible Moves:");
                 for (int i = 0; i < possibleMoves.size(); i++) {
                     System.out.print(possibleMoves.get(i).x + "," + (possibleMoves.get(i).y + " "));
                 }
+                System.out.println();
 
                 //if no possible moves say so
                 if (possibleMoves.size() == 0) {
@@ -150,30 +176,37 @@ public class Gui  extends Application{
 
                 for (int i = 0; i < possibleMoves.size(); i++) {
                     if ((x == possibleMoves.get(i).x) && (y == possibleMoves.get(i).y)) {
+                        playerValidMove = true;
                         // make the move
                         Move selMove = new Move(x, y);
                         //update gui cmdboard
                         guiGB.updateBoard(selMove, true);
-                        //TODO update GUI
-                        updateGui();
-                        //TODO do flips
+                        //update cmdboard with flips
+                        for (int j = 0; j < vector.length; j++){
+                            reverseFlip(selMove.x, selMove.y, pColor,j);
+                        }
+                        guiGB.printBoard();
 
+                        //update gui
+                        updateGui();
                         break;
                     }
-                    if (board[x][y].hasPiece()) {
-                        System.out.println("This tile is occupied");
+                    else {
+                        playerValidMove = false;
                     }
                 }
-
+                //dont allow non valid moves
+                if(!playerValidMove){
+                    System.out.println("Not a valid move");
+                    return;
+                }
                 //clear possible moves
                 possibleMoves.clear();
-
                 //change color
                 pColor = 1;
                 playerColor = false;
 
-                //get AI possible moves
-                //generate possible moves
+                //generate possible AI moves
                 //check list of possible moves
                 Move AItemp;
                 int AIcurY = 0;
@@ -197,6 +230,7 @@ public class Gui  extends Application{
                 for (int i = 0; i < possibleMoves.size(); i++) {
                     System.out.print(possibleMoves.get(i).x + "," + (possibleMoves.get(i).y + " "));
                 }
+                System.out.println();
 
                 //if no possible moves say so
                 boolean AInoMoves = false;
@@ -229,7 +263,7 @@ public class Gui  extends Application{
                                 }
                             }
                         }
-                        System.out.print("Possible Edge Moves: ");
+                        System.out.println("Possible Edge Moves: ");
                         for (int i = 0; i < edgePossibleMoves.size(); i++) {
                             System.out.print(edgePossibleMoves.get(i).x + "," + (edgePossibleMoves.get(i).y + " "));
                         }
@@ -256,7 +290,7 @@ public class Gui  extends Application{
                                 }
                             }
                         }
-                        System.out.print("Better Possible Moves: ");
+                        System.out.println("Better Possible Moves: ");
                         for (int i = 0; i < betterPossibleMoves.size(); i++) {
                             System.out.print(betterPossibleMoves.get(i).x + "," + (betterPossibleMoves.get(i).y + " "));
                         }
@@ -290,22 +324,61 @@ public class Gui  extends Application{
                     System.out.println(selected.x + " " + selected.y);
                     //make move
                     Move AIMove = new Move(selected.x, selected.y);
-                    //update gui
-                    //TODO THIS DOESNT WORK
-                    updateGui();
-
                     //make AI flips
                     guiGB.updateBoard(selected, playerColor);
+                    //update cmdboard with flips
+                    for (int j = 0; j < vector.length; j++){
+                        reverseFlip(selected.x, selected.y, pColor,j);
+                    }
+                    //update gui
+                    updateGui();
                     //check player possible moves, if null then go again
+                    guiGB.printBoard();
+
+                    //reset pCOlor
+                    pColor = 0;
+                    playerColor = true;
+                    possibleMoves.clear();
+
+                    //generate possible moves
+                    //check list of possible moves
+                    Move t;
+                    int cy = 0;
+                    for (int i = 0; i < 64; i++) {
+                        t = new Move(i % 8, cy);
+                        if (i != 0 && t.x % 8 == 0) {
+                            cy++;
+                            t = new Move(0, cy);
+                        }
+
+                        if (guiGB.gameBoardT[i] == false) {
+                            if (checkValidMove(t, pColor)) {
+                                possibleMoves.add(t);
+                            }
+                        }
+                    }
+
+                    //debugging output
+                    System.out.print("Possible Moves:");
+                    for (int i = 0; i < possibleMoves.size(); i++) {
+                        System.out.print(possibleMoves.get(i).x + "," + (possibleMoves.get(i).y + " "));
+                    }
+                    System.out.println();
+                    //update label
+                    s = " ";
+                    for(int i = 0; i < possibleMoves.size(); i++){
+                        s += (possibleMoves.get(i).x + "," + (possibleMoves.get(i).y + " "));
+                    }
+
+                    possibleMoves.clear();
                 }
+
             }
             else {
                 System.out.println(e.getEventType());
             }
         }
     };
-
-
 
     public boolean checkValidMove(Move move, int pColor) {
         int x = move.x;
@@ -407,6 +480,41 @@ public class Gui  extends Application{
         return p;
     }
 
+    public void resetBoard(){
+        piecesG.getChildren().clear();
+        for(int x = 0; x < width; x++) {
+            for (int y = 0; y < height; y++) {
+                //make new tiles, even tiles are white
+                Tile tile = new Tile(((x + y) % 2 == 0), x, y);
+                board[x][y] = tile;
+                board[x][y].setPiece(null);
+                //event handler
+                tile.addEventHandler(MouseEvent.MOUSE_CLICKED, eventHandler);
+                tileGrid.getChildren().add(tile);
+
+                GamePiece piece = null;
+                //add starting pieces
+                if (x == 3 && y == 3) {
+                    piece = makePiece(false, 3, 3, tile);
+                }
+                if (x == 4 && y == 4) {
+                    piece = makePiece(false, 4, 4, tile);
+                }
+                if (x == 3 && y == 4) {
+                    piece = makePiece(true, 3, 4, tile);
+                }
+                if (x == 4 && y == 3) {
+                    piece = makePiece(true, 4, 3, tile);
+                }
+                if (piece != null) {
+                    tile.setPiece(piece);
+                    piecesG.getChildren().add(piece);
+                }
+            }
+        }
+    }
+
+
     public void updateGui(){
 
         for(int i = 0; i < 8; i++){
@@ -429,14 +537,14 @@ public class Gui  extends Application{
 
                 //if a flip happened, update
                 if(board[i][j].getPiece() != null) {
+//                    System.out.println("X and Y: " + i + " " + j + " " + board[i][j].getPiece().getPieceColor() + " " + guiGB.getColor(i, j));
                     if (board[i][j].getPiece().getPieceColor() != guiGB.getColor(i, j)) {
                         board[i][j].getPiece().setPieceColor(guiGB.getColor(i, j));
+//                        System.out.println(board[i][j].getPiece().getPieceColor());
                     }
                 }
             }
         }
-
-
     }
 
     private Parent makeBoard(){
@@ -496,15 +604,16 @@ public class Gui  extends Application{
         Parent board = makeBoard();
         p.setCenter(board);
         p.setMargin(board, new Insets(100));
+        //right
+        Button reset = new Button("RESET");
+        reset.addEventHandler(ActionEvent.ACTION, resetButton);
+        reset.setFont(new Font("Arial", 30));
+        p.setRight(reset);
+
         //bottom
         //TODO THIS ISNT WORKING
-        String s = "";
-        for(int i = 0; i < possibleMoves.size(); i++){
-             s += (possibleMoves.get(i).x + "," + (possibleMoves.get(i).y + " "));
-        }
 
         Label PosMoves = new Label("Possible Moves: " + s);
-
         PosMoves.setFont(new Font("Arial", 30));
         p.setBottom(PosMoves);
 
