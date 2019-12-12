@@ -38,6 +38,7 @@ public class GuiPlayer implements Player {
         else {
             playerColor = false;
         }
+        cgb = new ConsoleGameboard(0);
     }
 
     @Override
